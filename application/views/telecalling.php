@@ -27,19 +27,21 @@ $this->load->view('includes/header');
                         <div class="card-header yogintra align-items-center d-flex justify-content-between">
                             <div class="row align-items-center ml-auto" style="margin-bottom:-2px">
                                 <div class="filter d-flex justify-content-center align-items-center">
-                                    <div class="d-flex mr-1 align-items-center">                                  
-                                        <button  type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
+                                    <div class="d-flex mr-1 align-items-center">
+                                        <button type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
                                             Generate&nbsp;&nbsp;<i class="fas fa-arrow-right"></i>
                                         </button>
                                         <!-- <button type="button" class="btn btn-danger mr-3" onclick=reset()>reset</button> -->
                                     </div>
                                     <div class="d-flex mr-1 align-items-center">
                                         <!-- <label for="fromDate" class="exampleInputEmail1 mr-1 text-muted ">From</label> -->
-                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate" max="<?php echo date('Y-m-d');?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate"
+                                            max="<?php echo date('Y-m-d'); ?>">
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <label for="toDate" class="exampleInputEmail1 mt-1 mr-3 text-muted">To</label>
-                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate" max="<?php echo date('Y-m-d');?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate"
+                                            max="<?php echo date('Y-m-d'); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +80,7 @@ $this->load->view('includes/footer');
     let filter = () => {
         let toDate = $("#toDate").val();
         let fromDate = $("#fromDate").val();
-        getData(fromDate,toDate);
+        getData(fromDate, toDate);
     }
 
     let reset = () => {
@@ -87,9 +89,9 @@ $this->load->view('includes/footer');
         getData();
     }
 
-    let getData = (startDate='',endDate='') => {
+    let getData = (startDate = '', endDate = '') => {
         var apiUrl = PANELURL + 'telecalling/view';
-        ajaxCallData(apiUrl, {startDate:startDate,endDate:endDate}, 'POST')
+        ajaxCallData(apiUrl, { startDate: startDate, endDate: endDate }, 'POST')
             .then(function (result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
@@ -118,7 +120,7 @@ $this->load->view('includes/footer');
                             render: function (data, type, row) {
                                 return `<div justify-content-center">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" onclick="change_status(${row.id},${row.is_customer})" id="customSwitch${row.id}">
+                                            <input type="checkbox" class="custom-control-input" onclick="change_status(${row.id})" id="customSwitch${row.id}">
                                             <label title="change status to customers" style="cursor:pointer" class="custom-control-label" for="customSwitch${row.id}"></label>
                                         </div>
                                     </div>`;
@@ -134,7 +136,7 @@ $this->load->view('includes/footer');
                                             <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash mr5"></i>
                                             </button>
-                                            <button title="change status to leads" onclick="change_back_toLeads(${row.id},${row.is_customer})" class="btn btn-success btn-xs mr5">
+                                            <button title="change status to leads" onclick="change_back_toLeads(${row.id})" class="btn btn-success btn-xs mr5">
                                                 <i class="fa fa-reply mr5"></i>
                                             </button>
                                         </div>`;
@@ -142,7 +144,7 @@ $this->load->view('includes/footer');
                         }
                     ]
                     createDataTable("example1", response, cols);
-                $('.buttons-pdf, .buttons-csv').css('height', '33px');
+                    $('.buttons-pdf, .buttons-csv').css('height', '33px');
 
                 } else {
                     createDataTable("example1", '', '');
@@ -155,14 +157,13 @@ $this->load->view('includes/footer');
 
     getData();
 
-    let change_status = (id, status) => {
+    let change_status = (id) => {
         let postData = {
-            'id': id,
-            'status': status
+            'id': id
         }
         ajaxCallData(PANELURL + 'telecalling/changeStatus', postData, 'POST')
             .then(function (result) {
-                
+
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {
                     resp = JSON.parse(result);
@@ -181,10 +182,9 @@ $this->load->view('includes/footer');
             });
     };
 
-    let change_back_toLeads = (id, status) => {
+    let change_back_toLeads = (id) => {
         let postData = {
-            'id': id,
-            'status': status
+            'id': id
         }
         ajaxCallData(PANELURL + 'telecalling/changeStatusToLeads', postData, 'POST')
             .then(function (result) {

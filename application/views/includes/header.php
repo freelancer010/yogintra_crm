@@ -275,6 +275,17 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                            <?php if ($this->uri->segment(1) == 'renewal') {
+                                    $renewal = 'active';
+                                } ?>
+                                <a href="<?= PANELURL ?>renewal" class="nav-link <?= @$renewal ?>">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Renewal
+                                    </p>
+                                </a>
+                            </li>
                         <?php } ?>
                         <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id']==3){ ?>
                             <li class="nav-item">

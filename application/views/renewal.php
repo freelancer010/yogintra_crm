@@ -6,12 +6,12 @@ $this->load->view('includes/header');
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>All Data</h1>
+                    <h1>Telecalling</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">All Data</li>
+                        <li class="breadcrumb-item active">Telecalling</li>
                     </ol>
                 </div>
             </div>
@@ -31,10 +31,8 @@ $this->load->view('includes/header');
                                         <button type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
                                             Generate&nbsp;&nbsp;<i class="fas fa-arrow-right"></i>
                                         </button>
-                                        <!-- <button type="button" class="btn btn-danger mr-3" onclick=reset()>reset</button> -->
                                     </div>
                                     <div class="d-flex mr-1 align-items-center">
-                                        <!-- <label for="fromDate" class="exampleInputEmail1 mr-1 text-muted ">From</label> -->
                                         <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate"
                                             max="<?php echo date('Y-m-d'); ?>">
                                     </div>
@@ -51,16 +49,16 @@ $this->load->view('includes/header');
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Client Name</th>
-                                        <th>Client Number</th>
-                                        <th>Country</th>
-                                        <th>State</th>
-                                        <th>City</th>
-                                        <th style="width:200px !important">Type Of Class</th>
-                                        <th style="width:200px !important">Date</th>
-                                        <th>Lead Stage</th>
-                                        <th>Action</th>
+                                        <th style="width:2% !important;">ID</th>
+                                        <th style="width:10% !important;">Client Name</th>
+                                        <th style="width:6% !important;">Client Number</th>
+                                        <th style="width:5% !important;">Country</th>
+                                        <th style="width:5% !important;">State</th>
+                                        <th style="width:5% !important;">City</th>
+                                        <th style="width:10% !important;">Type Of Class</th>
+                                        <th style="width:10% !important;">Date</th>
+                                        <th style="width:5% !important;">Package Expire Date</th>
+                                        <th style="width:5% !important;">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -88,14 +86,19 @@ $this->load->view('includes/footer');
     }
 
     let getData = (startDate = '', endDate = '') => {
-        var apiUrl = PANELURL + 'lead/allData';
+        var apiUrl = PANELURL + 'renewal/view';
         ajaxCallData(apiUrl, { startDate: startDate, endDate: endDate }, 'POST')
             .then(function (result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
                     response = resp.data;
                     let cols = [
-                        { data: "id" },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return row.id;
+                            }
+                        },
                         {
                             data: null,
                             render: function (data, type, row) {
@@ -109,35 +112,28 @@ $this->load->view('includes/footer');
                         { data: "class_type" },
                         { data: "created_date" },
                         {
-                            data: null,
-                            render: function (data, type, row) {
-                                return `${(row.status == 1) ? '<p class="mx-3 my-auto bg-secondary p-1 text-center" style="border-radius:12px">Lead</p>' :
-                                    (row.status == 2) ? '<p class="mx-3 my-auto bg-warning p-1 text-center" style="border-radius:12px">Telecalling</p>' :
-                                        (row.status == 3) ? '<p class="mx-3 my-auto bg-success p-1 text-center" style="border-radius:12px">Customer</p>' :
-                                            (row.status == 4) ? '<p class="mx-3 my-auto bg-danger p-1 text-center" style="border-radius:12px">Rejected</p>' :
-                                                (row.status == 5) ? '<p class="mx-3 my-auto bg-info p-1 text-center" style="border-radius:12px">Renewal</p>' :
-                                                    ''
-                                    }`;
-                            }
+                            data: "package_end_date"
                         },
                         {
                             data: null,
                             render: function (data, type, row) {
-                                return `<div class="d-flex justify-content-between px-3">
-                                        <a href="profile/edit?id=${row.id}" title="edit" class="btn btn-warning btn-xs mr5">
-                                                <i class="fa fa-edit"></i>
-                                        </a>
-                                        <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">
-                                        <i class="fa fa-trash"></i></button>
-                                    </div class="d-flex">`;
+                                return `<div class="d-flex justify-content-between">
+                                            <a href="profile/edit?id=${row.id}" title="edit" class="btn btn-warning btn-xs mr5">
+                                                <i class="fa fa-edit mr5"></i>
+                                            </a>
+                                            <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">
+                                                <i class="fa fa-trash mr5"></i>
+                                            </button>
+                                        </div>`;
                             }
                         }
                     ]
                     createDataTable("example1", response, cols);
+                    $('.buttons-pdf, .buttons-csv').css('height', '33px');
+
                 } else {
                     createDataTable("example1", '', '');
                 }
-                $('.buttons-pdf, .buttons-csv').css('height', '33px');
             })
             .catch(function (err) {
                 console.log(err);
@@ -146,61 +142,11 @@ $this->load->view('includes/footer');
 
     getData();
 
-    let change_status = (id, status) => {
-        let postData = {
-            'id': id,
-            'status': status
-        }
-        ajaxCallData(PANELURL + 'telecalling/changeStatus', postData, 'POST')
-            .then(function (result) {
-                jsonCheck = isJSON(result);
-                if (jsonCheck == true) {
-                    resp = JSON.parse(result);
-                    if (resp.success == 1) {
-                        notifyAlert(resp.message, 'success');
-                    } else {
-                        notifyAlert('You are not authorized!', 'danger');
-                    }
-                } else {
-                    notifyAlert('You are not authorized!', 'danger');
-                }
-                getData();
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
-    };
-
-    let change_back_toLeads = (id, status) => {
-        let postData = {
-            'id': id,
-            'status': status
-        }
-        ajaxCallData(PANELURL + 'telecalling/changeStatusToLeads', postData, 'POST')
-            .then(function (result) {
-                jsonCheck = isJSON(result);
-                if (jsonCheck == true) {
-                    resp = JSON.parse(result);
-                    if (resp.success == 1) {
-                        getData();
-                        notifyAlert(resp.message, 'success');
-                    } else {
-                        notifyAlert('You are not authorized!', 'danger');
-                    }
-                } else {
-                    notifyAlert('We are sorry, You are not authorized!', 'danger');
-                }
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
-    };
-
     let deleteTelecalling = (id) => {
         let postData = {
             'id': id,
         }
-        ajaxCallData(PANELURL + 'telecalling/deleteData', postData, 'POST')
+        ajaxCallData(PANELURL + 'renewal/deleteData', postData, 'POST')
             .then(function (result) {
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {

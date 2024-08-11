@@ -139,7 +139,7 @@ $this->load->view('includes/footer');
                                         </a>
                                         <button href="#" title="delete this row" onclick="deletecustomer(${row.id})" class="btn btn-danger btn-xs">
                                         <i class="fa fa-trash"></i></button>
-                                        <button title="change status to leads" onclick="change_back_toLeads(${row.id},${row.is_customer})" class="btn btn-success btn-xs mr5">
+                                        <button title="change status to leads" onclick="change_back_toLeads(${row.id})" class="btn btn-success btn-xs mr5">
                                             <i class="fa fa-reply mr5"></i>
                                         </button>
                                         
@@ -164,10 +164,9 @@ $this->load->view('includes/footer');
 
     getData();
 
-    let change_back_toLeads = (id, status) => {
+    let change_back_toLeads = (id) => {
         let postData = {
-            'id': id,
-            'status': status
+            'id': id
         }
         ajaxCallData(PANELURL + 'customer/changeStatusToTelecalling', postData, 'POST')
             .then(function (result) {

@@ -1,19 +1,21 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class GlobalController extends CI_Controller {
-	
-	public function __construct(){
+class GlobalController extends CI_Controller
+{
+
+	public function __construct()
+	{
 
 		parent::__construct();
 
 		auth_check();
-	 
+
 		// $this->rbac->check_module_access();
 		// if($this->uri->segment(3) != '')
 		// $this->rbac->check_operation_access();
 	}
-	
+
 	public function index()
 	{
 		$this->load->view('index');
@@ -21,60 +23,48 @@ class GlobalController extends CI_Controller {
 
 	public function counts()
 	{
-		if($_SESSION['admin_role_id'] == 3){
+		if ($_SESSION['admin_role_id'] == 3) {
 			$data1 = $this->db
-            ->where('status', 1)
-            ->where('is_customer', 0)
-            ->where('is_tellecalling', 0)
-            ->group_start()
-                ->where('created_by', $_SESSION['username'])
-                ->or_where('created_by', null)
-                ->or_where('created_by', '')
-            ->group_end()
-            ->order_by('created_date', 'desc')
-            ->get('leads')
-            ->result_array();
+				->where('status', 1)
+				->group_start()
+				->where('created_by', $_SESSION['username'])
+				->or_where('created_by', null)
+				->or_where('created_by', '')
+				->group_end()
+				->order_by('created_date', 'desc')
+				->get('leads')
+				->result_array();
 
 
 			$data2 = $this->db->where([
 				'created_by' => 'sadmin',
-				'status' => 1,
-				'is_customer' => 0,
-				'is_tellecalling' => 0,
+				'status' => 1
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 
-			$lead = array_merge($data1,$data2);
-		}else{
+			$lead = array_merge($data1, $data2);
+		} else {
 			$lead = $this->db->where([
-				'is_tellecalling' => 0,
-				'is_customer' => 0,
 				'status' => 1
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 		}
 
 
-		if($_SESSION['admin_role_id'] == 3){
+		if ($_SESSION['admin_role_id'] == 3) {
 			$data1 = $this->db->where([
 				'created_by' => $_SESSION['username'],
 				'status' => 1,
-				'is_customer' => 0,
-				'is_tellecalling' => 0,
 				'read_status' => 0
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 
 			$data2 = $this->db->where([
 				'created_by' => 'sadmin',
 				'status' => 1,
-				'is_customer' => 0,
-				'is_tellecalling' => 0,
 				'read_status' => 0
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 
-			$unreadLeads = array_merge($data1,$data2);
-		}else{
+			$unreadLeads = array_merge($data1, $data2);
+		} else {
 			$unreadLeads = $this->db->where([
-				'is_tellecalling' => 0,
-				'is_customer' => 0,
 				'status' => 1
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 		}
@@ -93,8 +83,7 @@ class GlobalController extends CI_Controller {
 
 		//rejected
 		$rejected = $this->db->where([
-			'is_rejected' => 1,
-			'status' => 1
+			'status' => 4
 		])->order_by('id', 'desc')->get('leads')->result_array();
 
 
@@ -114,45 +103,33 @@ class GlobalController extends CI_Controller {
 
 
 		//customers
-		if($_SESSION['admin_role_id'] == 3){
+		if ($_SESSION['admin_role_id'] == 3) {
 			$data1 = $this->db->where([
 				'created_by' => $_SESSION['username'],
-				'status' => 1,
-				'is_customer' => 1,
-				'is_tellecalling' => 1,
+				'status' => 3
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 
 			$data2 = $this->db->where([
 				'created_by' => 'sadmin',
-				'status' => 1,
-				'is_customer' => 1,
-				'is_tellecalling' => 1,
+				'status' => 3
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 
-			$customer = array_merge($data1,$data2);
-		}else{
+			$customer = array_merge($data1, $data2);
+		} else {
 			$customer = $this->db->where([
-				'is_tellecalling' => 1,
-				'is_customer' => 1,
-				'status' => 1
+				'status' => 3
 			])->order_by('created_date', 'desc')->get('leads')->result_array();
 		}
 
 		//telecallers
-		if($_SESSION['admin_role_id'] == 3){
+		if ($_SESSION['admin_role_id'] == 3) {
 			$where = [
-				'is_customer'=>0,
-				'is_tellecalling' => 1,
-				'status' => 1,
-				'created_by' => $_SESSION['username'],
-				'is_rejected' => 0
+				'status' => 2,
+				'created_by' => $_SESSION['username']
 			];
-		}else{
+		} else {
 			$where = [
-				'is_customer'=>0,
-				'is_tellecalling' => 1,
-				'status' => 1,
-				'is_rejected' => 0
+				'status' => 2
 			];
 		}
 		$telecaller = $this->db->where($where)->order_by('id', 'desc')->get('leads')->result_array();
@@ -170,23 +147,23 @@ class GlobalController extends CI_Controller {
 			$result = array(
 				'lead' => count($lead),
 				'unreadLeads' => count($unreadLeads),
-	
+
 				'customer' => count($customer),
 				'telecaller' => count($telecaller),
-				
+
 				'recruits' => count($recruits),
 				'unreadRecruits' => count($unreadRecruits),
-	
+
 				'trainer' => count($trainer),
 				'unreadTrainer' => count($unreadTrainer),
-	
+
 				'rejected' => count($rejected),
 
 				'yoga' => count($yoga),
 				'events' => count($events),
-	
-				'totalCredit' => array_sum(array_column($customers,'full_payment')),
-				'totalDebit' => array_sum(array_column($customers,'payTotrainer'))
+
+				'totalCredit' => array_sum(array_column($customers, 'full_payment')),
+				'totalDebit' => array_sum(array_column($customers, 'payTotrainer'))
 			);
 		} else {
 			$result = [
@@ -194,7 +171,7 @@ class GlobalController extends CI_Controller {
 				'message' => 'No data found!'
 			];
 		}
-		
+
 		echo json_encode($result);
 	}
 }

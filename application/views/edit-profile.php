@@ -36,10 +36,6 @@ $this->load->view('includes/header');
                                     <div class="row align-items-start">
                                             <div class="form-group col-lg-6 col-sm-12">
                                                 <label for="clientName">Client Name</label>
-
-                                                <input type="hidden" value="" name="is_customer" id="isCustomer">
-                                                <input type="hidden" value="" name="is_tellecalling" id="isTelecalling">
-
                                                 <input <?php if($_SESSION['admin_role_id'] == 3){echo 'readonly';} ?> required type="text" class="form-control editInputBox" id="clientName" name="name"
                                                     placeholder="Enter Client Name">
                                             </div>
@@ -144,6 +140,11 @@ $this->load->view('includes/header');
                                                 <label for="demopay">Trial Date</label>
                                                 <input required type="datetime-local" class="form-control editInputBox customEditInputBox" id="demDate"
                                                     name="demDate" placeholder="Enter Trial Date">
+                                            </div>
+                                            <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
+                                                <label for="demopay">Package End Date</label>
+                                                <input type="date" class="form-control editInputBox customEditInputBox" id="packEndDate"
+                                                    name="packageEndDate" placeholder="Enter Package End Date">
                                             </div>
                                             <div class="form-group col-lg-6 col-sm-12" id="attempStatusHolder">
                                                 <label class="mt-3 d-block">Status</label>
@@ -288,6 +289,7 @@ $this->load->view('includes/footer');
                     $('#payableAmount').val(response.quotation * response.package);
                     $('#demopay').val(response.dempay);
                     $('#demDate').val(response.demDate);
+                    $('#packEndDate').val(response.package_end_date);
                     $('#totalPay').val(response.totalPayDate);
                     $('#fullPayType').val(response.full_payment);
                     if (response.attempt1 == 0) {
@@ -368,7 +370,7 @@ $this->load->view('includes/footer');
                     });
 
                     // hding iputs 
-                    if(response.is_tellecalling == 0 && response.is_customer == 0){
+                    if(response.status == 1){
                         $('#isCustomer').val('0');
                         $('#isTelecalling').val('0');
 
@@ -388,9 +390,9 @@ $this->load->view('includes/footer');
                         $('#fulltrainerPayDate').css('display', 'none');
                         $('#payable').css('display', 'none');
                         $('#demoDate').css('display', 'none');
-                        
+                        $('#packageEndDate').css('display', 'none');
                         $('#back-btn').on('click',()=>{redirect('lead')});
-                    }else if(response.is_tellecalling == 1 && response.is_customer == 0){
+                    }else if(response.status == 2){
                         $('#class_type_hidden').val(response.class_type);
 
                         $('#isCustomer').val('0');
@@ -404,12 +406,11 @@ $this->load->view('includes/footer');
                         $('#fullPatrainerPaymentyment').css('display', 'none');
                         $('#fulltrainerPayDate').css('display', 'none');
                         $('#back-btn').on('click',()=>{redirect('telecalling')});
-                    }else if(response.is_tellecalling == 1 && response.is_customer == 1){
+                    }else if(response.status == 3){
                         $('#class_type_hidden').val(response.class_type);
 
                         $('#isCustomer').val('1');
                         $('#isTelecalling').val('1');
-
                         $('#attemp1Holder').css('display', 'none');
                         $('#attempStatusHolder').css('display', 'none');
                         $('#attemp2Holder').css('display', 'none');
