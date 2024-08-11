@@ -1,9 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Telecalling extends CI_Controller {
+class Telecalling extends CI_Controller
+{
 
-	public function __construct(){
+	public function __construct()
+	{
 
 		parent::__construct();
 
@@ -11,8 +13,8 @@ class Telecalling extends CI_Controller {
 
 		$this->rbac->check_module_access();
 
-		if($this->uri->segment(2) != '')
-		$this->rbac->check_operation_access();
+		if ($this->uri->segment(2) != '')
+			$this->rbac->check_operation_access();
 	}
 
 	public function index()
@@ -22,116 +24,106 @@ class Telecalling extends CI_Controller {
 
 	public function getTellcalling()
 	{
-	    error_reporting(0);
-		if($_POST['startDate'] != ''){
-			$this->db->where(['date(created_date)>='=>  $_POST['startDate']]);
+		error_reporting(0);
+		if ($_POST['startDate'] != '') {
+			$this->db->where(['date(created_date)>=' => $_POST['startDate']]);
 		}
 
-		if($_POST['endDate'] != ''){
-			$this->db->where(['date(created_date)<='=>  $_POST['endDate']]);
+		if ($_POST['endDate'] != '') {
+			$this->db->where(['date(created_date)<=' => $_POST['endDate']]);
 		}
-		if($_SESSION['admin_role_id'] == 3){
+		if ($_SESSION['admin_role_id'] == 3) {
 			$where = [
-				'is_customer'=>0,
-				'is_tellecalling' => 1,
-				'status' => 1,
-				'is_rejected' => 0,
+				'status' => 2,
 				'created_by' => $_SESSION['username']
 			];
-		}else{
+		} else {
 			$where = [
-				'is_customer'=>0,
-				'is_tellecalling' => 1,
-				'status' => 1,
-				'is_rejected' => 0,
+				'status' => 2,
 			];
 		}
 		$resp = $this->db->where($where)->order_by('created_date', 'desc')->get('leads')->result_array();
 
-        if (count($resp) > 0) {
-            // Iterate through the result array and remove "Session" from the "class_type" values
-            foreach ($resp as &$item) {
-                if (isset($item['class_type'])) {
-                    $item['class_type'] = str_replace(' Session', '', $item['class_type']);
-                }
-            }
-        
-            $response = [
-                'success' => 1,
-                'data'    => $resp
-            ];
-        } else {
-            $response = [
-                'success' => 0,
-                'message' => 'No data found!'
-            ];
-        }
-		
-        echo json_encode($response);
+		if (count($resp) > 0) {
+			// Iterate through the result array and remove "Session" from the "class_type" values
+			foreach ($resp as &$item) {
+				if (isset($item['class_type'])) {
+					$item['class_type'] = str_replace(' Session', '', $item['class_type']);
+				}
+			}
+
+			$response = [
+				'success' => 1,
+				'data' => $resp
+			];
+		} else {
+			$response = [
+				'success' => 0,
+				'message' => 'No data found!'
+			];
+		}
+
+		echo json_encode($response);
 	}
 
-	public function changeStatus(){
+	public function changeStatus()
+	{
 		$id = $_POST['id'];
-		$status = $_POST['status']==0?1:0;
-		
-		$dataM = $this->db->select('*')->where(['id'=>$id])->get('leads')->row_array();
-		
-		if($status == 1 && $dataM['class_type'] == 'Yoga Center')
-		{
-		    $dataMain = [
-		        'client_name' => $dataM['name'],
-		        'client_number' => $dataM['number'],
-		        'email' => $dataM['email'],
-		        'country' => $dataM['country'],
-		        'state' => $dataM['state'],
-		        'city' => $dataM['city'],
-		        'lead_transfer_id' => $dataM['id']
-		    ];
-		    $this->db->insert('yoga', $dataMain);
-		    
-		    $data = $this->db->select('attempt1,attempt2,attempt3')->where(['id'=>$id])->get('leads')->row_array();
-    		$resp=false;
-    		
-    		$resp = $this->db->where(['id'=>$id])->update('leads',['status'=>4]);
-    		
-		}
-		else
-		{
-		    $data = $this->db->select('attempt1,attempt2,attempt3')->where(['id'=>$id])->get('leads')->row_array();
-    		$resp=false;
-    		if($data['attempt1']==1||$data['attempt2']==1||$data['attempt3']==1){
-    			$resp = $this->db->where(['id'=>$id])->update('leads',['is_customer'=>$status]);
-    		}
-		}
-		
-		
-		if($resp){
-			$response = [
-				'success'=> 1,
-				'message'	=> 'Status Changed Successfully'
+
+		$dataM = $this->db->select('*')->where(['id' => $id])->get('leads')->row_array();
+
+		if ($dataM['class_type'] == 'Yoga Center') {
+			$dataMain = [
+				'client_name' => $dataM['name'],
+				'client_number' => $dataM['number'],
+				'email' => $dataM['email'],
+				'country' => $dataM['country'],
+				'state' => $dataM['state'],
+				'city' => $dataM['city'],
+				'lead_transfer_id' => $dataM['id']
 			];
-		}else{
+			$this->db->insert('yoga', $dataMain);
+
+			$data = $this->db->select('attempt1,attempt2,attempt3')->where(['id' => $id])->get('leads')->row_array();
+			$resp = false;
+
+			$resp = $this->db->where(['id' => $id])->update('leads', ['status' => 3]);
+
+		} else {
+			$data = $this->db->select('attempt1,attempt2,attempt3')->where(['id' => $id])->get('leads')->row_array();
+			$resp = false;
+			if ($data['attempt1'] == 1 || $data['attempt2'] == 1 || $data['attempt3'] == 1) {
+				$resp = $this->db->where(['id' => $id])->update('leads', ['status' => 3]);
+			}
+		}
+
+		if ($resp) {
 			$response = [
-				'success'=> 1,
-				'message'	=> 'No attempts for telecalling found!'
+				'success' => 1,
+				'message' => 'Status Changed Successfully'
+			];
+		} else {
+			$response = [
+				'success' => 1,
+				'message' => 'No attempts for telecalling found!'
 			];
 		}
 		echo json_encode($response);
 	}
 
-	public function changeStatusToLeads(){
+	public function changeStatusToLeads()
+	{
 		$id = $_POST['id'];
-		$status = $_POST['status']==0?0:1;
-		$resp = $this->db->where(['id'=>$id])->update('leads',['is_tellecalling'=>$status]);
-		if($resp){
+		$resp = $this->db->where(['id' => $id])->update('leads', ['status' => 2]);
+		if ($resp) {
 			$response = [
-				'success'=> 1,
-				'message'	=> 'Status Changed Successfully'
+				'success' => 1,
+				'message' => 'Status Changed Successfully'
 			];
-		}else{
+		} else {
 			$response = [
-				'success'=> 0,
-				'message'	=> 'No data found!'
+				'success' => 0,
+				'message' => 'No data found!'
 			];
 		}
 		echo json_encode($response);

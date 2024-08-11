@@ -178,7 +178,7 @@ $this->load->view('includes/footer');
                             data: null,
                             render: function (data, type, row) {
                                 return `<div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch${row.id}" onclick="change_status(${row.id},${row.is_tellecalling})" id="customSwitch${row.id}">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch${row.id}" onclick="change_status(${row.id})" id="customSwitch${row.id}">
                                         <label title="change status to tellicalling" style="cursor:pointer" class="custom-control-label" for="customSwitch${row.id}"></label>
                                     </div>`;
                             }
@@ -247,10 +247,9 @@ $this->load->view('includes/footer');
     $('.buttons-pdf, .buttons-csv').css('height', '33px');
 
 
-    let change_status = (id, status) => {
+    let change_status = (id) => {
         let postData = {
-            'id': id,
-            'status': status
+            'id': id
         }
         ajaxCallData(PANELURL + 'lead/changeStatus', postData, 'POST')
             .then(function (result) {

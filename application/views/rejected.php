@@ -36,7 +36,7 @@ $this->load->view('includes/header');
                                     <tr>
                                         <th style="width:2% !important;">ID</th>
                                         <th style="width:12% !important;">Client Name</th>
-                                        <th style="width:10% !important;"s>Client Number</th>
+                                        <th style="width:10% !important;" s>Client Number</th>
                                         <th style="width:6% !important;">Country</th>
                                         <th style="width:6% !important;">State</th>
                                         <th style="width:6% !important;">City</th>
@@ -65,7 +65,7 @@ $this->load->view('includes/footer');
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
                     response = resp.data;
-                    let cols = [                        
+                    let cols = [
                         { data: "id" },
                         {
                             data: null,
@@ -89,7 +89,7 @@ $this->load->view('includes/footer');
                                             <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                            <button title="change status to leads" onclick="restroreLead(${row.id},${row.is_customer})" class="btn btn-success btn-xs mr5">
+                                            <button title="change status to leads" onclick="restroreLead(${row.id})" class="btn btn-success btn-xs mr5">
                                                 <i class="fa fa-reply mr5"></i>
                                             </button>
                                         </div>`;
@@ -108,10 +108,9 @@ $this->load->view('includes/footer');
 
     getData();
 
-    let restroreLead = (id, status) => {
+    let restroreLead = (id) => {
         let postData = {
-            'id': id,
-            'status': status
+            'id': id
         }
         ajaxCallData(PANELURL + 'AllData/restrore', postData, 'POST')
             .then(function (result) {

@@ -37,7 +37,7 @@ $this->load->view('includes/header');
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <p class="text-muted text-center my-12">Profile Details</p><br/><br/>
+                            <p class="text-muted text-center my-12">Profile Details</p><br /><br />
                             <ul class="list-groups list-group-unbordered mb-3 row align-items-start"></ul>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ $this->load->view('includes/footer');
 ?>
 <script>
     let param = "<?= $_GET['id'] ?>";
-    let changeReadStatus = ()=>{
+    let changeReadStatus = () => {
         var apiUrl = PANELURL + 'profile/changeReadStatus';
         ajaxCallData(apiUrl, { 'id': param }, 'POST')
             .then(function (result) {
@@ -65,23 +65,26 @@ $this->load->view('includes/footer');
         ajaxCallData(apiUrl, { 'id': param }, 'POST')
             .then(function (result) {
                 response = JSON.parse(result);
-                resp= response.leads;
-                resptrainers= response.trainers;
-                resppaymentDetails= response.paymentDetails;
-        
-                $('#back-btn').on('click',()=>{
-                    if(resp.is_tellecalling == 0 && resp.is_customer == 0 && resp.is_rejected == 0){
+                resp = response.leads;
+                resptrainers = response.trainers;
+                resppaymentDetails = response.paymentDetails;
+                respRenewDetails = response.renew_details;
+
+                $('#back-btn').on('click', () => {
+                    if (resp.status == 1) {
                         redirect('lead');
-                    }else if(resp.is_tellecalling == 1 && resp.is_customer == 0 && resp.is_rejected == 0){
+                    } else if (resp.status == 2) {
                         redirect('telecalling');
-                    }else if(resp.is_tellecalling == 1 && resp.is_customer == 1 && resp.is_rejected == 0){
+                    } else if (resp.status == 3) {
                         redirect('customer');
-                    }else if(resp.is_tellecalling == 1 && resp.is_customer == 0 && resp.is_rejected == 1){
-                        redirect('telecalling');
+                    } else if (resp.status == 4) {
+                        redirect('rejected');
+                    } else if (resp.status == 5) {
+                        redirect('renewal');
                     }
                     // javascript:history.go(-1)
-                    });
-                
+                });
+
                 $('.list-groups').append(`<li class="list-group-item col-lg-6 col-sm-12">
                                     <b>Name&nbsp;:</b><span class="mx-2">${resp.name}</span>
                                     <a class="float-right">
@@ -120,7 +123,7 @@ $this->load->view('includes/footer');
                                     </a>
                                 </li>
                                 <li class="list-group-item col-lg-6 col-sm-12">
-                                    <b>Lead created on&nbsp;:</b><span class="mx-2">${(resp.created_date).slice(0,10)}&nbsp; at &nbsp;${(resp.created_date).slice(11)}</span>
+                                    <b>Lead created on&nbsp;:</b><span class="mx-2">${(resp.created_date).slice(0, 10)}&nbsp; at &nbsp;${(resp.created_date).slice(11)}</span>
                                     <a class="float-right">
                                     </a>
                                 </li>
@@ -149,8 +152,8 @@ $this->load->view('includes/footer');
                                     <a class="float-right">
                                     </a>
                                 </li>
-                                ${resp.is_tellecalling == 1 ? 
-                                `<li class="list-group-item col-lg-6 col-sm-12">
+                                ${(resp.status == 3 || resp.status == 2) ?
+                        `<li class="list-group-item col-lg-6 col-sm-12">
                                     <b>Attendee Name&nbsp;:</b><span class="mx-2">${resp.attendeeName}</span>
                                     <a class="float-right">
                                     </a>
@@ -178,10 +181,14 @@ $this->load->view('includes/footer');
                                     <a class="float-right">
                                     </a>
                                 </li>
-                                ${(resp.is_tellecalling == 1 && resp.is_customer == 0)?
-                                    `<li class="list-group-item col-lg-6 col-sm-12">
+                                <li class="list-group-item col-lg-6 col-sm-12">
+                                    <b>Package End Date&nbsp;:</b>
+                                    <span class="mx-2">${resp.package_end_date != '0000-00-00' ? resp.package_end_date : ''}</span>
+                                </li>
+                                ${(resp.status == 2) ?
+                            `<li class="list-group-item col-lg-6 col-sm-12">
                                         <b>Attempt Stage:</b>
-                                        ${resp.attempt1 == 0 ? '<span style="padding: 3px !important;" class="btn btn-warning">Pending</span>' : resp.attempt1 == 2 ? '<span style="padding: 3px !important;" class="btn btn-danger">Rejected</span>' :''}
+                                        ${resp.attempt1 == 0 ? '<span style="padding: 3px !important;" class="btn btn-warning">Pending</span>' : resp.attempt1 == 2 ? '<span style="padding: 3px !important;" class="btn btn-danger">Rejected</span>' : ''}
                                     </li>
                                     <li class="list-group-item col-lg-6 col-sm-12">
                                         <b>Attempt 1&nbsp;:</b>
@@ -197,15 +204,15 @@ $this->load->view('includes/footer');
                                         <b>Attempt 3&nbsp;:</b>
                                         <br>Remarks &nbsp;:<span class="mx-2">${resp.attempt3Remarks}</span>
                                         <br>Date Time &nbsp;:<span class="mx-2">${resp.attempt3Date}</span>
-                                    </li>`:''}` : ''}
-                                ${resp.is_customer == 1 ?
+                                    </li>`: ''}` : ''}
+                                ${resp.status == 3 ?
 
-                                `<li class="list-group-item col-lg-6 col-sm-12">
+                        `<li class="list-group-item col-lg-6 col-sm-12">
                                     <b>Trainer Name&nbsp;:</b><span class="mx-2">${resp.trainerName ? resp.trainerName : ''}</span>
                                     <a class="float-right">
                                     </a>
                                 </li>
-								<li class="list-group-item col-lg-6 col-sm-12">
+                                <li class="list-group-item col-lg-6 col-sm-12">
                                     <b>Trainer's Payment&nbsp;:</b><span class="mx-2">${resp.payTotrainer}</span>
                                     <a class="float-right"></a>
                                 </li>
@@ -223,32 +230,44 @@ $this->load->view('includes/footer');
                                     </a>
                                 </li>
                                 
-                                ${
-                                    resp.payment_type == 'Partition Payment' ?
-                                    `<li id="oldinput" class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3">
+                                ${resp.payment_type == 'Partition Payment' ?
+                            `<li id="oldinput" class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3">
                                         <b style="border-bottom:1px solid #ddd">Partial Payment History</b>
-                                    </li>`: 
-                                    `<li class="list-group-item col-lg-6 col-sm-12">
+                                    </li>`:
+                            `<li class="list-group-item col-lg-6 col-sm-12">
                                         <b>Full Payment Date&nbsp;:</b><span class="mx-2">${resp.totalPayDate}</span>
                                         <a class="float-right"></a>
                                     </li>`
-                                }`:''}
-
+                        }` : ''}
+                                <div id="renDetail" class="list-group-item col-12"></div>
                                 <a href="${PANELURL}profile/edit?id=${resp.id}" class="btn btn-primary btn-block"><b>Edit Profile</b></a>
                             `);
 
-                    $.each(resppaymentDetails, function(){
-                        newRowAdd =
+                $.each(resppaymentDetails, function () {
+                    newRowAdd =
                         `<div id="row" class="row mt-2">
                             <div class="input-group col-6">
                                 <p class="amount">Amount:&nbsp;&nbsp;${this.amount}</p>
                             </div>
                             <div class="col-6">
-                                <p lass="amountDate">Date:&nbsp;&nbsp;${(this.created_date).slice(0,10)}&nbsp; at &nbsp;${(this.created_date).slice(11)}</p>
+                                <p class="amountDate">Date:&nbsp;&nbsp;${(this.created_date).slice(0, 10)}&nbsp; at &nbsp;${(this.created_date).slice(11)}</p>
                             </div>
                         </div>`;
-                        $('#oldinput').append(newRowAdd);
-                    });
+                    $('#oldinput').append(newRowAdd);
+                });
+
+                $.each(respRenewDetails, function () {
+                    newRowAdd =
+                        `<div id="row" class="row mt-2">
+                            <div class="input-group col-6">
+                                <p><b>Renew Date:</b>&nbsp;&nbsp;${this.renew_date}</p>
+                            </div>
+                            <div class="col-6">
+                                <p><b>Renew By:</b>&nbsp;&nbsp;${(this.created_by)}</p>
+                            </div>
+                        </div>`;
+                    $('#renDetail').append(newRowAdd);
+                });
             })
             .catch(function (err) {
                 console.log(err);

@@ -34,10 +34,6 @@ $this->load->view('includes/header');
                             <div class="card-body">
                                 <div class="row align-items-start">
                                         <div class="form-group col-lg-6 col-sm-12">
-                                        <?php if(basename($_SERVER["REQUEST_URI"]) == 'addCustomer'){
-                                            echo "<input type='hidden' value='1' name='is_customer' />";
-                                            echo "<input type='hidden' value='1' name='is_tellecalling' />";
-                                        }?>
                                             <label for="clientName">Client Name</label>
                                             <input required type="text" class="form-control" id="clientName" name="name"
                                                 placeholder="Enter Client Name">

@@ -37,8 +37,6 @@ $this->load->view('includes/header');
                                         <div class="form-group col-lg-6 col-sm-12">
                                             <label for="clientName">Client Name</label>
                                             <input required type="text" class="form-control editInputBox" id="clientName" name="name" placeholder="Enter Client Name">
-                                            <input type="hidden" value="1" name="is_customer">
-                                            <input type="hidden" value="1" name="is_tellecalling">
                                             <input type="hidden" value="1" name="attempt1">
                                             <input type="hidden" value="cutomerAdded" name="cutomerAdded">
                                         </div>
@@ -142,7 +140,10 @@ $this->load->view('includes/header');
                                             <input required type="datetime-local" class="form-control editInputBox customEditInputBox" id="demDate"
                                                 name="demDate" placeholder="Enter Trial Date">
                                         </div>
-                                        
+                                        <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
+                                            <label for="packageEndDate">Package End Date</label>
+                                            <input required type="date" class="form-control editInputBox customEditInputBox" id="packEndDate" name="packageEndDate" placeholder="Enter Package End Date">
+                                        </div>
 										<div class="form-group col-lg-6 col-sm-12" id="fullPatrainerPaymentyment">
                                             <label for="trainerPayment">Trainer's Payment</label>
                                             <input required type="number" class="form-control editInputBox customEditInputBox customerInputBox" id="trainerPayment" name="trainerPayment" placeholder="Enter Trainers Payment">

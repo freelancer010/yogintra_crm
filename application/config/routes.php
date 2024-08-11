@@ -41,6 +41,12 @@ $route['customer/add'] = 'customer/savedata';
 $route['customer/delete'] = 'customer/deleteData';
 $route['customer/view'] = 'customer/getCustomer';
 
+//renewal
+$route['renewal'] = 'renewal';
+$route['renewal/add'] = 'renewal/savedata';
+$route['renewal/delete'] = 'renewal/deleteData';
+$route['renewal/view'] = 'renewal/getRenewal';
+
 //trainer
 $route['recruiter'] = 'Trainer/recruiter';
 $route['trainers'] = 'Trainer/viewTrainers';
