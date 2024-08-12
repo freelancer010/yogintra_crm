@@ -41,8 +41,6 @@ class Accounting extends CI_Controller
 				->get()
 				->result_array();
 
-				// print_r($this->db->last_query()); die;
-
 			if (count($customers) > 0) {
 				$response = [
 					'success' => 1,
