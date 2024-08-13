@@ -87,40 +87,54 @@ $this->load->view('includes/footer');
 
     let getData = (startDate = '', endDate = '') => {
         var apiUrl = PANELURL + 'renewal/view';
-        ajaxCallData(apiUrl, { startDate: startDate, endDate: endDate }, 'POST')
-            .then(function (result) {
+        ajaxCallData(apiUrl, {
+                startDate: startDate,
+                endDate: endDate
+            }, 'POST')
+            .then(function(result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
                     response = resp.data;
-                    let cols = [
-                        {
+                    let cols = [{
                             data: null,
-                            render: function (data, type, row) {
+                            render: function(data, type, row) {
                                 return row.id;
                             }
                         },
                         {
                             data: null,
-                            render: function (data, type, row) {
+                            render: function(data, type, row) {
                                 return `<a href="${PANELURL}profile?id=${row.id}">${row.name}</a>`;
                             }
                         },
-                        { data: "number" },
-                        { data: "country" },
-                        { data: "state" },
-                        { data: "city" },
-                        { data: "class_type" },
-                        { data: "created_date" },
+                        {
+                            data: "number"
+                        },
+                        {
+                            data: "country"
+                        },
+                        {
+                            data: "state"
+                        },
+                        {
+                            data: "city"
+                        },
+                        {
+                            data: "class_type"
+                        },
+                        {
+                            data: "created_date"
+                        },
                         {
                             data: "package_end_date"
                         },
                         {
                             data: null,
-                            render: function (data, type, row) {
+                            render: function(data, type, row) {
                                 return `<div class="d-flex justify-content-between">
-                                            <a href="profile/edit?id=${row.id}" title="edit" class="btn btn-warning btn-xs mr5">
+                                            <button title="renew this row" onclick="renewData(${row.id})" class="btn btn-warning btn-xs">
                                                 <i class="fa fa-edit mr5"></i>
-                                            </a>
+                                            </button>
                                             <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash mr5"></i>
                                             </button>
@@ -135,7 +149,7 @@ $this->load->view('includes/footer');
                     createDataTable("example1", '', '');
                 }
             })
-            .catch(function (err) {
+            .catch(function(err) {
                 console.log(err);
             });
     };
@@ -147,7 +161,7 @@ $this->load->view('includes/footer');
             'id': id,
         }
         ajaxCallData(PANELURL + 'renewal/deleteData', postData, 'POST')
-            .then(function (result) {
+            .then(function(result) {
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {
                     resp = JSON.parse(result);
@@ -162,7 +176,31 @@ $this->load->view('includes/footer');
                 }
 
             })
-            .catch(function (err) {
+            .catch(function(err) {
+                console.log(err);
+            });
+    };
+
+    let renewData = (id) => {
+        let postData = {
+            'id': id,
+        }
+        ajaxCallData(PANELURL + 'renewal/editRenewal', postData, 'POST')
+            .then(function(result) {
+                jsonCheck = isJSON(result);
+                if (jsonCheck == true) {
+                    resp = JSON.parse(result);
+                    if (resp.success == 1) {
+                        getData();
+                        notifyAlert('Data renewed successfully!', 'success');
+                    } else {
+                        notifyAlert('You are not authorized!', 'danger');
+                    }
+                } else {
+                    notifyAlert('You are not authorized!', 'danger');
+                }
+            })
+            .catch(function(err) {
                 console.log(err);
             });
     };

@@ -43,7 +43,7 @@ $route['customer/view'] = 'customer/getCustomer';
 
 //renewal
 $route['renewal'] = 'renewal';
-$route['renewal/add'] = 'renewal/savedata';
+$route['renewal/edit'] = 'renewal/editRenewal';
 $route['renewal/delete'] = 'renewal/deleteData';
 $route['renewal/view'] = 'renewal/getRenewal';
 
