@@ -185,8 +185,6 @@ class Lead extends CI_Controller
 
 	public function updatedata()
 	{
-		error_reporting(-1);
-		ini_set('display_errors', 1);
 		if ($this->input->post('leadId')) {
 			$leadId = $this->input->post('leadId');
 			$data['name'] = $this->input->post('name');
@@ -222,7 +220,11 @@ class Lead extends CI_Controller
 			$data['demDate'] = str_replace('T', ' ', $this->input->post('demDate'));
 			$data['trainerPayDate'] = $this->input->post('trainerPayDate') ?? $this->input->post('trainerPayDate');
 
-			$data['status'] = ($_POST['attempt1'] == 1 ? '3' : ($_POST['attempt1'] == 2 ? '4' : 1));
+			$status = ($_POST['attempt1'] == 1 ? '3' : ($_POST['attempt1'] == 2 ? '4' : 0));
+
+			if (!empty($status)) {
+				$data['status'] = $status;
+			}
 
 			$data['payment_type'] = $this->input->post('payment_type');
 			if (!empty($_POST['packageEndDate'])) {

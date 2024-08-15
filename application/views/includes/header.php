@@ -1,8 +1,8 @@
-<?php 
+<?php
 // echo "<pre>";print_r($_SESSION);exit;
-    if(!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])){
-        redirect(PANELURL.'logout');
-    }
+if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
+    redirect(PANELURL . 'logout');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +17,7 @@
         // if('serviceWorker' in navigator) {
         //   navigator.serviceWorker.register('serviceWorker.js');
         // };
-      </script>
+    </script>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -44,19 +44,23 @@
     <link rel="shortcut icon" href="<?= base_url('assets/') ?>site-logo.png" type="image/x-icon">
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"
+        integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    
+
     <!-- jQuery -->
     <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="<?= base_url('assets/') ?>plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"
+        integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
-   
+
 
         $.widget.bridge('uibutton', $.ui.button)
         let PANELURL = "<?= PANELURL ?>";
@@ -66,9 +70,11 @@
         .dataTables_filter label {
             display: flex;
         }
+
         input.form-control.form-control-sm {
             margin-left: 12px;
         }
+
         .hidden {
             display: none !important;
         }
@@ -88,19 +94,26 @@
         }
 
 
-        
-        @media (min-width: 768px){
-            .main-sidebar, .main-sidebar::before {
-                transition: margin-left .3s ease-in-out,width .3s ease-in-out;
+
+        @media (min-width: 768px) {
+
+            .main-sidebar,
+            .main-sidebar::before {
+                transition: margin-left .3s ease-in-out, width .3s ease-in-out;
                 width: 15%;
             }
-                body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+
+            body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper,
+            body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer,
+            body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
                 transition: margin-left .3s ease-in-out;
                 margin-left: 15%;
             }
         }
 
-        .sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
+        .sidebar-mini .main-sidebar .nav-link,
+        .sidebar-mini-md .main-sidebar .nav-link,
+        .sidebar-mini-xs .main-sidebar .nav-link {
             width: 100% !important;
             transition: width ease-in-out .3s;
         }
@@ -111,7 +124,8 @@
             text-align: center !important;
         } */
 
-        .table td, .table th {
+        .table td,
+        .table th {
             padding: 4px 2px;
             vertical-align: inherit;
             border-top: 1px solid #dee2e6;
@@ -119,6 +133,7 @@
             text-align: center !important;
             font-size: 14px;
         }
+
         .user-panel {
             position: relative !important;
             flex-direction: column !important;
@@ -151,20 +166,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  href="#" role="button" onclick="location.reload();">
-                    <i class="fas fa-sync-alt"></i>
+                    <a class="nav-link" href="#" role="button" onclick="location.reload();">
+                        <i class="fas fa-sync-alt"></i>
                     </a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
-            <img class=" ml-auto" style="margin-left:2rem; width:15% !important" src="<?= base_url('assets/') ?>logo.png"
-                        alt="AdminLTE Logo" class="brand-image">
+            <img class=" ml-auto" style="margin-left:2rem; width:15% !important"
+                src="<?= base_url('assets/') ?>logo.png" alt="AdminLTE Logo" class="brand-image">
         </nav>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #FEEEEF!important; color:red">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4"
+            style="background-color: #FEEEEF!important; color:red">
             <!-- Brand Logo -->
             <!-- <a href="<?= PANELURL . 'dashboard' ?>" class="brand-link">
                 <img style="margin-left:2rem" style="width:60%" src="<?= base_url('assets/') ?>logo.png"
@@ -177,12 +193,11 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="<?php if($_SESSION['profile_image'] != ''){ 
-                                            echo (PANELURL. $_SESSION['profile_image']); 
-                                        }else{ 
-                                            echo (PANELURL.'assets/dist/img/default-profile.png');
-                                        }?>" class="img-circle elevation-2"
-                            alt="User Image">
+                        <img src="<?php if ($_SESSION['profile_image'] != '') {
+                            echo (PANELURL . $_SESSION['profile_image']);
+                        } else {
+                            echo (PANELURL . 'assets/dist/img/default-profile.png');
+                        } ?>" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">
@@ -208,9 +223,9 @@
                                 </p>
                             </a>
                         </li>
-                        <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 3){ ?>
-                            
-                            
+                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 3) { ?>
+
+
                             <li class="nav-item">
                                 <?php if ($this->uri->segment(1) == 'allData') {
                                     $allData = 'active';
@@ -223,7 +238,7 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    
+
                                     <li class="nav-item">
                                         <?php if ($this->uri->segment(1) == 'allData') {
                                             $allData = 'active';
@@ -249,7 +264,7 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id']==3){ ?>
+                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 3) { ?>
                             <li class="nav-item">
                                 <?php if ($this->uri->segment(1) == 'lead') {
                                     $lead = 'active';
@@ -262,10 +277,10 @@
                                 </a>
                             </li>
                         <?php } ?>
-                        
-                        <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id']==3){ ?>
+
+                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 3) { ?>
                             <li class="nav-item">
-                            <?php if ($this->uri->segment(1) == 'telecalling') {
+                                <?php if ($this->uri->segment(1) == 'telecalling') {
                                     $telecalling = 'active';
                                 } ?>
                                 <a href="<?= PANELURL ?>telecalling" class="nav-link <?= @$telecalling ?>">
@@ -276,31 +291,30 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                            <?php if ($this->uri->segment(1) == 'renewal') {
-                                    $renewal = 'active';
-                                } ?>
-                                <a href="<?= PANELURL ?>renewal" class="nav-link <?= @$renewal ?>">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    <p>
-                                        Renewal
-                                    </p>
-                                </a>
-                            </li>
-                        <?php } ?>
-                        <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id']==3){ ?>
-                            <li class="nav-item">
-                                <?php if ($this->uri->segment(1) == 'customer') {
-                                    $customer = 'active';
-                                } ?>
-                                <a href="<?= PANELURL ?>customer" class="nav-link <?= @$customer ?>">
+                                <a href="<?= PANELURL . 'customer' ?>" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Customers
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'renewal' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Renewal</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'customer' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Customers</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         <?php } ?>
-                        <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 3|| $_SESSION['admin_role_id'] == 4){ ?>
+                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 3 || $_SESSION['admin_role_id'] == 4) { ?>
                             <li class="nav-item">
                                 <a href="<?= PANELURL . 'trainer' ?>" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
@@ -310,14 +324,14 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                <?php if($_SESSION['admin_role_id'] != 3){ ?>
-                                    <li class="nav-item">
-                                        <a href="<?= PANELURL . 'recruiter' ?>" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Recruits</p>
-                                        </a>
-                                    </li>
-                                <?php } ?>
+                                    <?php if ($_SESSION['admin_role_id'] != 3) { ?>
+                                        <li class="nav-item">
+                                            <a href="<?= PANELURL . 'recruiter' ?>" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Recruits</p>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
                                     <li class="nav-item">
                                         <a href="<?= PANELURL . 'trainers' ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
@@ -327,7 +341,7 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if($_SESSION['admin_role_id'] == 13 ){ ?>
+                        <?php if ($_SESSION['admin_role_id'] == 13) { ?>
                             <li class="nav-item">
                                 <a href="<?= PANELURL ?>yoga-bookings" class="nav-link">
                                     <i class="nav-icon fas fa-calendar"></i>
@@ -336,8 +350,8 @@
                                     </p>
                                 </a>
                             </li>
-                        <?php }?>
-                        <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 5 ){ ?>
+                        <?php } ?>
+                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 5) { ?>
                             <li class="nav-item">
                                 <a href="<?= PANELURL ?>event" class="nav-link">
                                     <i class="nav-icon fas fa-calendar"></i>
@@ -378,14 +392,14 @@
                                     <li class="nav-item">
                                         <a href="<?= PANELURL . 'office-expences' ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                        <p>Expenses</p>
+                                            <p>Expenses</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                         <?php } ?>
-                        
-                        <?php if($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2){ ?>
+
+                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2) { ?>
                             <li class="nav-item">
                                 <a href="<?= PANELURL . 'Admin_roles' ?>" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
@@ -433,31 +447,40 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if($_SESSION['admin_role_id'] == 1){ ?>
-                        <!--<li class="nav-item has-treeview <?php if($this->uri->segment(2) == "setting"){ echo "menu-open";}?>">-->
-                        <!--    <a href="#" class="nav-link <?php if($this->uri->segment(2) == "setting"){ echo "active";}?>">-->
-                        <!--      <i class="nav-icon fas fa-tools"></i>-->
-                        <!--      <p>-->
-                        <!--        Setting -->
-                        <!--        <i class="fas fa-angle-left right"></i>-->
-                        <!--      </p>-->
-                        <!--    </a>-->
-                        <!--    <ul class="nav nav-treeview">-->
-                        <!--    <li class="nav-item ">-->
-                        <!--      <a href="<?php echo base_url() ?>adm/setting/application_setting" class="nav-link <?php if($this->uri->segment(3) =="application_setting"){echo 'active';}?>">-->
-                        <!--        <i class="far fa-circle nav-icon"></i>-->
-                        <!--        <p>Application</p>-->
-                        <!--      </a>-->
-                        <!--    </li>-->
-                        <!--    <li class="nav-item ">-->
-                        <!--      <a href="<?php echo base_url() ?>adm/setting/visual_setting" class="nav-link <?php if($this->uri->segment(3) =="visual_setting"){echo 'active';}?>">-->
-                        <!--        <i class="far fa-circle nav-icon"></i>-->
-                        <!--        <p>Visual</p>-->
-                        <!--      </a>-->
-                        <!--    </li> -->
-                        <!--    </ul>-->
-                        <!--  </li>-->
-                        <?php }; ?>
+                        <?php if ($_SESSION['admin_role_id'] == 1) { ?>
+                            <!--<li class="nav-item has-treeview <?php if ($this->uri->segment(2) == "setting") {
+                                echo "menu-open";
+                            } ?>">-->
+                            <!--    <a href="#" class="nav-link <?php if ($this->uri->segment(2) == "setting") {
+                                echo "active";
+                            } ?>">-->
+                            <!--      <i class="nav-icon fas fa-tools"></i>-->
+                            <!--      <p>-->
+                            <!--        Setting -->
+                            <!--        <i class="fas fa-angle-left right"></i>-->
+                            <!--      </p>-->
+                            <!--    </a>-->
+                            <!--    <ul class="nav nav-treeview">-->
+                            <!--    <li class="nav-item ">-->
+                            <!--      <a href="<?php echo base_url() ?>adm/setting/application_setting" class="nav-link <?php if ($this->uri->segment(3) == "application_setting") {
+                                   echo 'active';
+                               } ?>">-->
+                            <!--        <i class="far fa-circle nav-icon"></i>-->
+                            <!--        <p>Application</p>-->
+                            <!--      </a>-->
+                            <!--    </li>-->
+                            <!--    <li class="nav-item ">-->
+                            <!--      <a href="<?php echo base_url() ?>adm/setting/visual_setting" class="nav-link <?php if ($this->uri->segment(3) == "visual_setting") {
+                                   echo 'active';
+                               } ?>">-->
+                            <!--        <i class="far fa-circle nav-icon"></i>-->
+                            <!--        <p>Visual</p>-->
+                            <!--      </a>-->
+                            <!--    </li> -->
+                            <!--    </ul>-->
+                            <!--  </li>-->
+                        <?php }
+                        ; ?>
                         <li class="nav-item">
                             <a href="<?= PANELURL ?>logout" class="nav-link">
                                 <i class="nav-icon fas fa-arrow-right"></i>
@@ -471,32 +494,39 @@
             </div>
         </aside>
         <style type="text/css">
-            body, .sidebar a
-            {
-                color: #434C66!important;
+            body,
+            .sidebar a {
+                color: #434C66 !important;
             }
+
             .navbar-white {
-              background-color: #feeeef!important;
-              color: #1f2d3d;
+                background-color: #feeeef !important;
+                color: #1f2d3d;
             }
+
             .user-panel {
-          border-bottom: 0!important;
-        }
-        .card
-        {
-            background-color: #feeeef!important;
-        }
-        .table td, .table th
-        {
-            text-align: left!important;
-        }
-        .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active, .btn-primary:hover, .btn-primary, .page-item.active .page-link
-        {
-            background-color: #01aeb7!important;
-            color: #FEEEEF!important;
-        }
-        table a
-        {
-            color: #01aeb7!important;
-        }
+                border-bottom: 0 !important;
+            }
+
+            .card {
+                background-color: #feeeef !important;
+            }
+
+            .table td,
+            .table th {
+                text-align: left !important;
+            }
+
+            .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
+            .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active,
+            .btn-primary:hover,
+            .btn-primary,
+            .page-item.active .page-link {
+                background-color: #01aeb7 !important;
+                color: #FEEEEF !important;
+            }
+
+            table a {
+                color: #01aeb7 !important;
+            }
         </style>
