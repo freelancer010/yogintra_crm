@@ -9,7 +9,6 @@ class Cron extends CI_Controller {
 
     public function updateRenewData()
 	{
-		$id = $_POST['id'];
 		$resp = $this->db->where('package_end_date <', date('Y-m-d'))->update('leads', ['status' => 5]);
 		if ($resp) {
 			$response = [

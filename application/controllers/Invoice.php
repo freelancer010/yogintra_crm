@@ -1,19 +1,22 @@
 <?php
 
-class Invoice extends CI_Controller { 
-	
-	function __construct() { 
+class Invoice extends CI_Controller
+{
+
+	function __construct()
+	{
 		parent::__construct(); // add library of Pdf $this->load->library('Pdf');
 	}
+
 	function index()
 	{
-	    error_reporting(0);
-		require_once(APPPATH. 'helpers/tcpdf/tcpdf.php');
-		
+		error_reporting(0);
+		require_once(APPPATH . 'helpers/tcpdf/tcpdf.php');
+
 		$leadId = $_GET['id'];
 		$customerData = $this->getLeadById($leadId)['data'];
 		// echo "<pre>";
-		// print_r($customerData['data']['name']);
+		// print_r($customerData);
 		// echo "</pre>";
 		// exit;
 
@@ -32,14 +35,14 @@ class Invoice extends CI_Controller {
 		// $pdf->SetHeaderData('', '0', 'YOGINTRA'.' 006', 'CUTOMER INVOICE');
 
 		// set header and footer fonts
-		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+		$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 		// set default monospaced font
 		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 		// set margins
-		$pdf->SetMargins(20,35 ,20 );
+		$pdf->SetMargins(20, 35, 20);
 		$pdf->SetHeaderMargin(0);
 		$pdf->SetFooterMargin(0);
 
@@ -50,8 +53,8 @@ class Invoice extends CI_Controller {
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 		// set some language-dependent strings (optional)
-		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-			require_once(dirname(__FILE__).'/lang/eng.php');
+		if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+			require_once(dirname(__FILE__) . '/lang/eng.php');
 			$pdf->setLanguageArray($l);
 		}
 
@@ -70,14 +73,14 @@ class Invoice extends CI_Controller {
 		// writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
 		// writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
-        $due_amount = ($customerData['package']*$customerData['quotation'])-$customerData['full_payment'];
+		$due_amount = ((int) $customerData['package'] * (int) $customerData['quotation']) - (int) $customerData['full_payment'];
 		// create some HTML content
 		$html = '<table style=" width: 100%; !important">
 					<tbody>
 						<tr>
 							<td class="">
 								<div>
-									<img src="'.base_url('assets/').'logo.jpg" alt="Company Logo" style="max-width: 100%;">
+									<img src="' . base_url('assets/') . 'logo.jpg" alt="Company Logo" style="max-width: 100%;">
 								</div>
 							</td>
 							<td> 
@@ -85,9 +88,9 @@ class Invoice extends CI_Controller {
 									<tbody>
 										<tr>
 											<td>
-												<strong style="padding: 1cm !important; text-transform: uppercase;background-color:#ddd">Invoice - </strong><span style="background-color:#ddd">#YI'.$_GET['id'].'</span>
-												<div style="width:100%">Pay Date : '.substr($customerData['demDate'],0,10).'
-												<br/>Bil Date : '.date('Y-m-d').'</div>
+												<strong style="padding: 1cm !important; text-transform: uppercase;background-color:#ddd">Invoice - </strong><span style="background-color:#ddd">#YI' . $_GET['id'] . '</span>
+												<div style="width:100%">Pay Date : ' . substr($customerData['demDate'], 0, 10) . '
+												<br/>Bil Date : ' . date('Y-m-d') . '</div>
 											</td>
 										</tr>
 									</tbody>
@@ -120,9 +123,9 @@ class Invoice extends CI_Controller {
 										<tr>
 											<td>
 												<strong style="padding: 1cm !important; text-transform: uppercase;">Bill To</strong>
-												<div style="font-size:12px;width:100%">'.$customerData['name'].'
-												<br/>'.$customerData['country'].', '.$customerData['state'].', '.$customerData['city'].'
-												<br/>'.$customerData['number'].'
+												<div style="font-size:12px;width:100%">' . $customerData['name'] . '
+												<br/>' . $customerData['country'] . ', ' . $customerData['state'] . ', ' . $customerData['city'] . '
+												<br/>' . $customerData['number'] . '
 												</div>
 											</td>
 										</tr>
@@ -156,16 +159,16 @@ class Invoice extends CI_Controller {
 						<tbody>
 							<tr>
 								<td style="border-top: 1px solid #eee; width:38%;padding: 5px;">
-								'.$customerData['class_type'].'
+								' . $customerData['class_type'] . '
 								</td>
 								<td align="center" style=" width:30%; border-top: 1px solid #eee; padding: 5px;">
-								'.$customerData['package'].'
+								' . $customerData['package'] . '
 								</td>
 								<td align="center" style="width:22%; border-top: 1px solid #eee; padding: 5px;">
-								₹'.$customerData['quotation'].'
+								₹' . $customerData['quotation'] . '
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-								₹'.$customerData['package']*$customerData['quotation'].'
+								₹' . (int) $customerData['package'] * (int) $customerData['quotation'] . '
 								</td>
 							</tr>
 							
@@ -180,7 +183,7 @@ class Invoice extends CI_Controller {
 								+Other Charges
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-								₹'.($customerData['package']*$customerData['quotation'])*0.03.'
+								₹' . ((int) $customerData['package'] * (int) $customerData['quotation']) * 0.03 . '
 								</td>
 							</tr>
 
@@ -195,7 +198,7 @@ class Invoice extends CI_Controller {
 								Paid Amount
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-								₹'.$customerData['full_payment'].'
+								₹' . $customerData['full_payment'] . '
 								</td>
 							</tr>
 							<tfoot>
@@ -210,7 +213,7 @@ class Invoice extends CI_Controller {
 										<strong>Due Amount</strong>
 									</th>
 									<th  align="right" style="border-bottom: 1px solid #00000080; border-right: 1px solid #fff; color:#fff; font-weight:800; background-color:#00000060; padding: 5px;">
-									<strong>₹'.$due_amount.'</strong>
+									<strong>₹' . $due_amount . '</strong>
 									</th>
 								</tr>
 							</tfoot>	
@@ -222,21 +225,75 @@ class Invoice extends CI_Controller {
 				<br/>
 				<br/>
 				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
+				<table style=" width: 100%; !important">
+					<tbody>
+						<tr>
+							<td>
+								<table style=" width: 25%; !important">
+									<tbody>
+										<tr>
+											<td>
+												Bank Acc:-
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Name:-
+											</td>
+											<td>
+												YOGINTRA
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Acc:-
+											</td>
+											<td>
+												50200067255848
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Acc:-
+											</td>
+											<td>
+												Current
+											</td>
+										</tr>
+										<tr>
+											<td>
+												IFSC:-
+											</td>
+											<td>
+												HDFC0000175
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Branch name:-
+											</td>
+											<td>
+												DOMBIVALI-EAST
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Upi:-
+											</td>
+											<td>
+												9867291573@hdfcbank
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</td>
+							<td>
+								<img src="' . base_url('assets/') . 'payment-qr.jpg" alt="Payment QR">
+							</td>
+						</tr>
+					</tbody>
+				</table>
 
 				<table style=" width: 100%; !important">
 					<tbody>
@@ -264,51 +321,51 @@ class Invoice extends CI_Controller {
 
 	public function getBookingProfile($id)
 	{
-		if(@$id){
+		if (@$id) {
 			$resp = $this->db->where('id', $id)->get('events')->row_array();
 			$resp['paymentDetails'] = $this->getPayments($id);
 			if (count($resp) > 0) {
-				$response['success'] =1;
-				$response['data'] =$resp;
+				$response['success'] = 1;
+				$response['data'] = $resp;
 			} else {
 				$response['success'] = 0;
-				$response['message'] ='No data found!';
+				$response['message'] = 'No data found!';
 			}
 			return $response;
-		}else{
+		} else {
 			echo "Internal Server Error !";
 		}
 	}
 
 	public function getYoga($id)
 	{
-		if(@$id){
+		if (@$id) {
 			$resp = $this->db->where('id', $id)->get('yoga')->row_array();
 			$resp['paymentDetails'] = $this->getPayments($id);
 			if (count($resp) > 0) {
-				$response['success'] =1;
-				$response['data'] =$resp;
+				$response['success'] = 1;
+				$response['data'] = $resp;
 			} else {
 				$response['success'] = 0;
-				$response['message'] ='No data found!';
+				$response['message'] = 'No data found!';
 			}
 			return $response;
-		}else{
+		} else {
 			echo "Internal Server Error !";
 		}
 	}
 
 	public function getPayments($leadId)
 	{
-		$where = ['status' => 1,'leadId'=>$leadId,'type'=>'event'];
+		$where = ['status' => 1, 'leadId' => $leadId, 'type' => 'event'];
 		$response = $this->db->where($where)->get('paymentdata')->result_array();
 		return $response;
 	}
 
 	function event()
 	{
-		require_once(APPPATH. 'helpers/tcpdf/tcpdf.php');
-		
+		require_once(APPPATH . 'helpers/tcpdf/tcpdf.php');
+
 		$leadId = $_GET['id'];
 		$customerData = $this->getBookingProfile($leadId)['data'];
 		// echo "<pre>";
@@ -331,14 +388,14 @@ class Invoice extends CI_Controller {
 		// $pdf->SetHeaderData('', '0', 'YOGINTRA'.' 006', 'CUTOMER INVOICE');
 
 		// set header and footer fonts
-		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+		$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 		// set default monospaced font
 		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 		// set margins
-		$pdf->SetMargins(20,35 ,20 );
+		$pdf->SetMargins(20, 35, 20);
 		$pdf->SetHeaderMargin(0);
 		$pdf->SetFooterMargin(0);
 
@@ -349,8 +406,8 @@ class Invoice extends CI_Controller {
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 		// set some language-dependent strings (optional)
-		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-			require_once(dirname(__FILE__).'/lang/eng.php');
+		if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+			require_once(dirname(__FILE__) . '/lang/eng.php');
 			$pdf->setLanguageArray($l);
 		}
 
@@ -376,7 +433,7 @@ class Invoice extends CI_Controller {
 						<tr>
 							<td class="">
 								<div>
-									<img src="'.base_url('assets/').'logo.jpg" alt="Company Logo" style="max-width: 100%;">
+									<img src="' . base_url('assets/') . 'logo.jpg" alt="Company Logo" style="max-width: 100%;">
 								</div>
 							</td>
 							<td> 
@@ -388,10 +445,10 @@ class Invoice extends CI_Controller {
 													Invoice - 
 												</strong>
 												<span style="background-color:#ddd">
-													#YI'.$_GET['id'].'
+													#YI' . $_GET['id'] . '
 												</span>
-												<div style="width:100%">Pay Date : '.substr($customerData['totalPayDate'],0,10).'
-													<br/>Bil Date : '.date('Y-m-d').'
+												<div style="width:100%">Pay Date : ' . substr($customerData['totalPayDate'], 0, 10) . '
+													<br/>Bil Date : ' . date('Y-m-d') . '
 												</div>
 											</td>
 										</tr>
@@ -425,9 +482,9 @@ class Invoice extends CI_Controller {
 										<tr>
 											<td>
 												<strong style="padding: 1cm !important; text-transform: uppercase;">Bill To</strong>
-												<div style="font-size:12px;width:100%">'.$customerData['client_name'].'
-												<br/>'.$customerData['country'].', '.$customerData['state'].', '.$customerData['city'].'
-												<br/>'.$customerData['client_number'].'
+												<div style="font-size:12px;width:100%">' . $customerData['client_name'] . '
+												<br/>' . $customerData['country'] . ', ' . $customerData['state'] . ', ' . $customerData['city'] . '
+												<br/>' . $customerData['client_number'] . '
 												</div>
 											</td>
 										</tr>
@@ -479,13 +536,13 @@ class Invoice extends CI_Controller {
 									background-color:#00000060; 
 									padding: 5px;"
 								>
-									<strong>'.
-										(
-											$customerData['payment_type'] == 'Partition Payment' ?
-											"Partition Payment"
-											: 'Full Pay'
-										)
-									.'</strong>
+									<strong>' .
+			(
+				$customerData['payment_type'] == 'Partition Payment' ?
+				"Partition Payment"
+				: 'Full Pay'
+			)
+			. '</strong>
 											
 								</th>
 							</tr>
@@ -493,16 +550,16 @@ class Invoice extends CI_Controller {
 						<tbody>
 							<tr>
 								<td style="border-top: 1px solid #eee; width:32%;padding: 5px;">
-									'.$customerData['event_name'].'
+									' . $customerData['event_name'] . '
 								</td>
 								<td style="border-top: 1px solid #eee; width:16%;padding: 5px;">
-									'.$customerData['class_type'].'
+									' . $customerData['class_type'] . '
 								</td>
 								<td align="center" style=" width:30%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.$customerData['package'].'
+									₹' . $customerData['package'] . '
 								</td>
 								<td align="right" style="width:22%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.$customerData['totalPayAmount'].'
+									₹' . $customerData['totalPayAmount'] . '
 								</td>
 							</tr>
 							
@@ -517,7 +574,7 @@ class Invoice extends CI_Controller {
 								+Other Charges
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.($customerData['totalPayAmount']*0.03).'
+									₹' . ($customerData['totalPayAmount'] * 0.03) . '
 								</td>
 							</tr>
 
@@ -532,7 +589,7 @@ class Invoice extends CI_Controller {
 								Paid Amount
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.($customerData['totalPayAmount']).'
+									₹' . ($customerData['totalPayAmount']) . '
 								</td>
 							</tr>
 							<tfoot>
@@ -550,7 +607,7 @@ class Invoice extends CI_Controller {
 										<strong>Due Amount</strong>
 									</th>
 									<th  align="right" style="border-bottom: 1px solid #00000080; border-right: 1px solid #fff; color:#fff; font-weight:800; background-color:#00000060; padding: 5px;">
-										<strong>₹'.($customerData['package']-$customerData['totalPayAmount']).'</strong>
+										<strong>₹' . ($customerData['package'] - $customerData['totalPayAmount']) . '</strong>
 									</th>
 								</tr>
 							</tfoot>	
@@ -605,8 +662,8 @@ class Invoice extends CI_Controller {
 
 	function yoga()
 	{
-		require_once(APPPATH. 'helpers/tcpdf/tcpdf.php');
-		
+		require_once(APPPATH . 'helpers/tcpdf/tcpdf.php');
+
 		$leadId = $_GET['id'];
 		$customerData = $this->getYoga($leadId)['data'];
 		// echo "<pre>";
@@ -629,14 +686,14 @@ class Invoice extends CI_Controller {
 		// $pdf->SetHeaderData('', '0', 'YOGINTRA'.' 006', 'CUTOMER INVOICE');
 
 		// set header and footer fonts
-		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+		$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 		// set default monospaced font
 		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 		// set margins
-		$pdf->SetMargins(20,35 ,20 );
+		$pdf->SetMargins(20, 35, 20);
 		$pdf->SetHeaderMargin(0);
 		$pdf->SetFooterMargin(0);
 
@@ -647,8 +704,8 @@ class Invoice extends CI_Controller {
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 		// set some language-dependent strings (optional)
-		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-			require_once(dirname(__FILE__).'/lang/eng.php');
+		if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+			require_once(dirname(__FILE__) . '/lang/eng.php');
 			$pdf->setLanguageArray($l);
 		}
 
@@ -674,7 +731,7 @@ class Invoice extends CI_Controller {
 						<tr>
 							<td class="">
 								<div>
-									<img src="'.base_url('assets/').'logo.jpg" alt="Company Logo" style="max-width: 100%;">
+									<img src="' . base_url('assets/') . 'logo.jpg" alt="Company Logo" style="max-width: 100%;">
 								</div>
 							</td>
 							<td> 
@@ -686,10 +743,10 @@ class Invoice extends CI_Controller {
 													Invoice - 
 												</strong>
 												<span style="background-color:#ddd">
-													#YI'.$_GET['id'].'
+													#YI' . $_GET['id'] . '
 												</span>
-												<div style="width:100%">Pay Date : '.substr($customerData['totalPayDate'],0,10).'
-													<br/>Bil Date : '.date('Y-m-d').'
+												<div style="width:100%">Pay Date : ' . substr($customerData['totalPayDate'], 0, 10) . '
+													<br/>Bil Date : ' . date('Y-m-d') . '
 												</div>
 											</td>
 										</tr>
@@ -723,9 +780,9 @@ class Invoice extends CI_Controller {
 										<tr>
 											<td>
 												<strong style="padding: 1cm !important; text-transform: uppercase;">Bill To</strong>
-												<div style="font-size:12px;width:100%">'.$customerData['client_name'].'
-												<br/>'.$customerData['country'].', '.$customerData['state'].', '.$customerData['city'].'
-												<br/>'.$customerData['client_number'].'
+												<div style="font-size:12px;width:100%">' . $customerData['client_name'] . '
+												<br/>' . $customerData['country'] . ', ' . $customerData['state'] . ', ' . $customerData['city'] . '
+												<br/>' . $customerData['client_number'] . '
 												</div>
 											</td>
 										</tr>
@@ -777,13 +834,13 @@ class Invoice extends CI_Controller {
 									background-color:#00000060; 
 									padding: 5px;"
 								>
-									<strong>'.
-										(
-											$customerData['payment_type'] == 'Partition Payment' ?
-											"Partition Payment"
-											: 'Full Pay'
-										)
-									.'</strong>
+									<strong>' .
+			(
+				$customerData['payment_type'] == 'Partition Payment' ?
+				"Partition Payment"
+				: 'Full Pay'
+			)
+			. '</strong>
 											
 								</th>
 							</tr>
@@ -791,16 +848,16 @@ class Invoice extends CI_Controller {
 						<tbody>
 							<tr>
 								<td style="border-top: 1px solid #eee; width:32%;padding: 5px;">
-									'.$customerData['event_name'].'
+									' . $customerData['event_name'] . '
 								</td>
 								<td style="border-top: 1px solid #eee; width:16%;padding: 5px;">
 									Yoga Center
 								</td>
 								<td align="center" style=" width:30%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.$customerData['package'].'
+									₹' . $customerData['package'] . '
 								</td>
 								<td align="right" style="width:22%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.$customerData['totalPayAmount'].'
+									₹' . $customerData['totalPayAmount'] . '
 								</td>
 							</tr>
 							
@@ -815,7 +872,7 @@ class Invoice extends CI_Controller {
 								+Other Charges
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.($customerData['totalPayAmount']*0.03).'
+									₹' . ($customerData['totalPayAmount'] * 0.03) . '
 								</td>
 							</tr>
 
@@ -830,7 +887,7 @@ class Invoice extends CI_Controller {
 								Paid Amount
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-									₹'.($customerData['totalPayAmount']).'
+									₹' . ($customerData['totalPayAmount']) . '
 								</td>
 							</tr>
 							<tfoot>
@@ -848,7 +905,7 @@ class Invoice extends CI_Controller {
 										<strong>Due Amount</strong>
 									</th>
 									<th  align="right" style="border-bottom: 1px solid #00000080; border-right: 1px solid #fff; color:#fff; font-weight:800; background-color:#00000060; padding: 5px;">
-										<strong>₹'.($customerData['package']-$customerData['totalPayAmount']).'</strong>
+										<strong>₹' . ($customerData['package'] - $customerData['totalPayAmount']) . '</strong>
 									</th>
 								</tr>
 							</tfoot>	
@@ -901,7 +958,6 @@ class Invoice extends CI_Controller {
 
 	}
 
-
 	public function getLeadById($leadId)
 	{
 		$id = $leadId;
@@ -919,4 +975,3 @@ class Invoice extends CI_Controller {
 		return ($response);
 	}
 }
-?>
