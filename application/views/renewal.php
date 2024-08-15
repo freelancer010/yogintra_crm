@@ -72,6 +72,35 @@ $this->load->view('includes/header');
 <?php
 $this->load->view('includes/footer');
 ?>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="renewalForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Renewal Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-lg-6 col-sm-12">
+                        <label for="clientName">Package Renewal Date</label>
+                        <input required type="hidden" class="form-control" id="leadId" name="leadId" value="">
+                        <input required type="date" class="form-control" id="renewalDate" name="renewalDate"
+                            placeholder="Enter Renewal Date" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     let filter = () => {
         let toDate = $("#toDate").val();
@@ -88,50 +117,50 @@ $this->load->view('includes/footer');
     let getData = (startDate = '', endDate = '') => {
         var apiUrl = PANELURL + 'renewal/view';
         ajaxCallData(apiUrl, {
-                startDate: startDate,
-                endDate: endDate
-            }, 'POST')
-            .then(function(result) {
+            startDate: startDate,
+            endDate: endDate
+        }, 'POST')
+            .then(function (result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
                     response = resp.data;
                     let cols = [{
-                            data: null,
-                            render: function(data, type, row) {
-                                return row.id;
-                            }
-                        },
-                        {
-                            data: null,
-                            render: function(data, type, row) {
-                                return `<a href="${PANELURL}profile?id=${row.id}">${row.name}</a>`;
-                            }
-                        },
-                        {
-                            data: "number"
-                        },
-                        {
-                            data: "country"
-                        },
-                        {
-                            data: "state"
-                        },
-                        {
-                            data: "city"
-                        },
-                        {
-                            data: "class_type"
-                        },
-                        {
-                            data: "created_date"
-                        },
-                        {
-                            data: "package_end_date"
-                        },
-                        {
-                            data: null,
-                            render: function(data, type, row) {
-                                return `<div class="d-flex justify-content-between">
+                        data: null,
+                        render: function (data, type, row) {
+                            return row.id;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return `<a href="${PANELURL}profile?id=${row.id}">${row.name}</a>`;
+                        }
+                    },
+                    {
+                        data: "number"
+                    },
+                    {
+                        data: "country"
+                    },
+                    {
+                        data: "state"
+                    },
+                    {
+                        data: "city"
+                    },
+                    {
+                        data: "class_type"
+                    },
+                    {
+                        data: "created_date"
+                    },
+                    {
+                        data: "package_end_date"
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return `<div class="d-flex justify-content-between">
                                             <button title="renew this row" onclick="renewData(${row.id})" class="btn btn-warning btn-xs">
                                                 <i class="fa fa-edit mr5"></i>
                                             </button>
@@ -139,8 +168,8 @@ $this->load->view('includes/footer');
                                                 <i class="fa fa-trash mr5"></i>
                                             </button>
                                         </div>`;
-                            }
                         }
+                    }
                     ]
                     createDataTable("example1", response, cols);
                     $('.buttons-pdf, .buttons-csv').css('height', '33px');
@@ -149,7 +178,7 @@ $this->load->view('includes/footer');
                     createDataTable("example1", '', '');
                 }
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log(err);
             });
     };
@@ -161,7 +190,7 @@ $this->load->view('includes/footer');
             'id': id,
         }
         ajaxCallData(PANELURL + 'renewal/deleteData', postData, 'POST')
-            .then(function(result) {
+            .then(function (result) {
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {
                     resp = JSON.parse(result);
@@ -176,17 +205,22 @@ $this->load->view('includes/footer');
                 }
 
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log(err);
             });
     };
 
     let renewData = (id) => {
+        $("#exampleModal").modal('show');
+        $("#leadId").val(id);
+    }
+
+    let submitRenewForm = () => {
         let postData = {
             'id': id,
         }
         ajaxCallData(PANELURL + 'renewal/editRenewal', postData, 'POST')
-            .then(function(result) {
+            .then(function (result) {
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {
                     resp = JSON.parse(result);
@@ -200,8 +234,37 @@ $this->load->view('includes/footer');
                     notifyAlert('You are not authorized!', 'danger');
                 }
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log(err);
             });
     };
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#renewalForm').on('submit', function (event) {
+            event.preventDefault();
+
+            var serializedData = $(this).serialize();
+
+            ajaxCallData(PANELURL + 'renewal/editRenewal', serializedData, 'POST')
+                .then(function (result) {
+                    jsonCheck = isJSON(result);
+                    if (jsonCheck == true) {
+                        resp = JSON.parse(result);
+                        if (resp.success == 1) {
+                            getData();
+                            notifyAlert('Data renewed successfully!', 'success');
+                        } else {
+                            notifyAlert('You are not authorized!', 'danger');
+                        }
+                    } else {
+                        notifyAlert('You are not authorized!', 'danger');
+                    }
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        });
+    });
 </script>

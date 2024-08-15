@@ -26,11 +26,11 @@ class Renewal extends CI_Controller
 	{
 		error_reporting(0);
 		if ($_POST['startDate'] != '') {
-			$this->db->where(['date(created_date)>=' =>  $_POST['startDate']]);
+			$this->db->where(['date(created_date)>=' => $_POST['startDate']]);
 		}
 
 		if ($_POST['endDate'] != '') {
-			$this->db->where(['date(created_date)<=' =>  $_POST['endDate']]);
+			$this->db->where(['date(created_date)<=' => $_POST['endDate']]);
 		}
 		if ($_SESSION['admin_role_id'] == 3) {
 			$where = [
@@ -53,7 +53,7 @@ class Renewal extends CI_Controller
 
 			$response = [
 				'success' => 1,
-				'data'    => $resp
+				'data' => $resp
 			];
 		} else {
 			$response = [
@@ -86,20 +86,20 @@ class Renewal extends CI_Controller
 	public function editRenewal()
 	{
 		$leadId = $_POST['id'];
-		$data['package_end_date'] = $this->input->post('packageEndDate');
+		$data['package_end_date'] = $this->input->post('renewalDate');
 
-		$resp = $this->db->where('id', $leadId)->update('leads', ['status' => 3,'package_end_date' => date('Y-m-d')]);
+		$resp = $this->db->where('id', $leadId)->update('leads', $data);
 		if ($resp) {
 			$renew_data = [
 				'lead_id' => $leadId,
-				'renew_date' => date('Y-m-d'),
+				'renew_date' => $data['package_end_date'],
 				'created_by' => $_SESSION['username']
 			];
 			$this->db->replace('package_renew_detail', $renew_data);
 
 			$response = [
 				'success' => 1,
-				'message' => 'Lead deleted Successfully'
+				'message' => 'Renewal Updated Successfully'
 			];
 		} else {
 			$response = [
