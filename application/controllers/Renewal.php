@@ -87,6 +87,9 @@ class Renewal extends CI_Controller
 	{
 		$leadId = $_POST['leadId'];
 		$data['package_end_date'] = $this->input->post('renewalDate');
+		if ($data['package_end_date'] >= date('Y-m-d')) {
+			$data['status'] = 3;
+		}
 
 		$resp = $this->db->where('id', $leadId)->update('leads', $data);
 		if ($resp) {
