@@ -85,7 +85,7 @@ class Renewal extends CI_Controller
 
 	public function editRenewal()
 	{
-		$leadId = $_POST['id'];
+		$leadId = $_POST['leadId'];
 		$data['package_end_date'] = $this->input->post('renewalDate');
 
 		$resp = $this->db->where('id', $leadId)->update('leads', $data);

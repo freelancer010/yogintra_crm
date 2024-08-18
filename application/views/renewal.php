@@ -253,6 +253,8 @@ $this->load->view('includes/footer');
                     if (jsonCheck == true) {
                         resp = JSON.parse(result);
                         if (resp.success == 1) {
+                            $("#exampleModal").modal('hide');
+
                             getData();
                             notifyAlert('Data renewed successfully!', 'success');
                         } else {
