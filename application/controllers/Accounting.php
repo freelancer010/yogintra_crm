@@ -67,11 +67,11 @@ class Accounting extends CI_Controller
 	{
 		if (@$_POST['class_type']) {
 
-			$this->db->where_in('status', [2, 3]);
+			// $this->db->where_in('status', [2, 3]);
 
-			if ($_POST['class_type'] != 'all') {
-				$where['class_type'] = $_POST['class_type'];
-			}
+			// if ($_POST['class_type'] != 'all') {
+			// 	$where['class_type'] = $_POST['class_type'];
+			// }
 			$filterwhere = '';
 			if ($_POST['startDate'] != '') {
 				$filterwhere .= " and created_date >= '{$_POST['startDate']}'";
@@ -81,7 +81,7 @@ class Accounting extends CI_Controller
 				$filterwhere .= " and created_date <= '{$_POST['endDate']}'";
 			}
 
-			$query = "(SELECT class_type, sum(full_payment) full_payment, sum(payTotrainer) payTotrainer FROM leads WHERE status='1' and class_type != '' {$filterwhere} group by class_type) 
+			$query = "(SELECT class_type, sum(full_payment) full_payment, sum(payTotrainer) payTotrainer FROM leads WHERE status <> '0' and class_type != '' {$filterwhere} group by class_type) 
                     UNION ALL (SELECT 'Expense' class_type, '0' full_payment, sum(expenseAmount) payTotrainer FROM expense where 1=1 {$filterwhere} ) 
                     UNION ALL (SELECT class_type, sum(totalPayAmount) full_payment, '0' payTotrainer FROM events where 1=1 {$filterwhere}  group by class_type)
                     UNION ALL (SELECT class_type, sum(totalPayAmount) full_payment, '0' payTotrainer FROM yoga where 1=1 {$filterwhere}  group by class_type)";

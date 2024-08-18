@@ -42,7 +42,9 @@ class Customer extends CI_Controller
 			$data['payTotrainer'] = $this->input->post('trainerPayment') ?? $this->input->post('trainerPayment') ?? '0';
 			$data['trainerPayDate'] = $this->input->post('trainerPayDate') ?? $this->input->post('trainerPayDate');
 			$data['demDate'] = str_replace('T', ' ', $this->input->post('demDate'));
-			$data['package_end_date'] = $this->input->post('packageEndDate');
+			if (!empty($_POST['packageEndDate'])) {
+				$data['package_end_date'] = $this->input->post('packageEndDate');
+			}
 			$data['totalPayDate'] = $this->input->post('totalPayDate') ? $this->input->post('totalPayDate') : '';
 			$data['payableAmount'] = $this->input->post('payableAmount') ? $this->input->post('payableAmount') : '';
 			$data['payment_type'] = $this->input->post('payment_type');
@@ -78,7 +80,14 @@ class Customer extends CI_Controller
 						$this->db->insert_batch('paymentdata', $batchInsert);
 					}
 				}
-
+				if (!empty($_POST['packageEndDate'])) {
+					$renew_data = [
+						'lead_id' => $leadId,
+						'renew_date' => date('Y-m-d'),
+						'created_by' => $_SESSION['username']
+					];
+					$this->db->replace('package_renew_detail', $renew_data);
+				}
 				$response = [
 					'success' => 1,
 					'message' => 'Customer Added Successfully'
@@ -110,7 +119,7 @@ class Customer extends CI_Controller
 			$user_name = $_SESSION['username'];
 
 			$where = "AND `leads`.`created_by` IN ('$user_name')";
-			
+
 			if (@$_POST['startDate'] != '') {
 				$where .= " AND date(leads.created_date) >=  '{$_POST['startDate']}'";
 			}

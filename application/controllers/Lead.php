@@ -234,7 +234,7 @@ class Lead extends CI_Controller
 				$data['full_payment'] = $this->input->post('totalPayAmount');
 				$data['totalPayDate'] = str_replace('T', ' ', $this->input->post('totalPayDate'));
 			} else if ($this->input->post('payment_type') == 'Partition Payment') {
-				$data['full_payment'] = array_sum((array)$this->input->post('fullPayment'));
+				$data['full_payment'] = array_sum((array) $this->input->post('fullPayment'));
 			}
 
 			$this->db->where('id', $leadId);
@@ -243,7 +243,7 @@ class Lead extends CI_Controller
 			if ($resp == true) {
 				if ($this->input->post('payment_type') == 'Partition Payment') {
 					$batchInsert = [];
-					foreach ((array)$this->input->post('fullPayment') as $key => $row) {
+					foreach ((array) $this->input->post('fullPayment') as $key => $row) {
 						if ($row > 0) {
 							$batchInsert[] = [
 								'leadId' => $leadId,
@@ -261,18 +261,20 @@ class Lead extends CI_Controller
 						$this->db->insert_batch('paymentdata', $batchInsert);
 					}
 				}
+
+				if (!empty($_POST['packageEndDate'])) {
+					$renew_data = [
+						'lead_id' => $leadId,
+						'renew_date' => date('Y-m-d'),
+						'created_by' => $_SESSION['username']
+					];
+					$this->db->replace('package_renew_detail', $renew_data);
+				}
+
 				$response = [
 					'success' => 1,
 					'message' => 'Inserted Successfully'
 				];
-
-				$renew_data = [
-					'lead_id' => $leadId,
-					'renew_date' => date('Y-m-d'),
-					'created_by' => $_SESSION['username']
-				];
-				$this->db->replace('package_renew_detail', $renew_data);
-
 			} else {
 				$response = [
 					'success' => 0,

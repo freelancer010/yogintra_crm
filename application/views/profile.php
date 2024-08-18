@@ -239,13 +239,16 @@ $this->load->view('includes/footer');
                                         <a class="float-right"></a>
                                     </li>`
                         }` : ''}
-                                <div id="renDetail" class="list-group-item col-12"></div>
-                                <a href="${PANELURL}profile/edit?id=${resp.id}" class="btn btn-primary btn-block"><b>Edit Profile</b></a>
-                            `);
+                        <a href="${PANELURL}profile/edit?id=${resp.id}" class="btn btn-primary btn-block"><b>Edit Profile</b></a>
+
+                        ${respRenewDetails.length > 0 ? `<li class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3" id="renDetail">
+                                                    <b style="border-bottom:1px solid">Package Renew History</b>
+                                                </li>`: ''};
+                `);
 
                 $.each(resppaymentDetails, function () {
                     newRowAdd =
-                        `<div id="row" class="row mt-2">
+                        `<div id = "row" class="row mt-2">
                             <div class="input-group col-6">
                                 <p class="amount">Amount:&nbsp;&nbsp;${this.amount}</p>
                             </div>
@@ -258,7 +261,7 @@ $this->load->view('includes/footer');
 
                 $.each(respRenewDetails, function () {
                     newRowAdd =
-                        `<div id="row" class="row mt-2">
+                        `<div id = "row" class="row mt-2">
                             <div class="input-group col-6">
                                 <p><b>Renew Date:</b>&nbsp;&nbsp;${this.renew_date}</p>
                             </div>
