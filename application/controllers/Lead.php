@@ -266,6 +266,7 @@ class Lead extends CI_Controller
 					$renew_data = [
 						'lead_id' => $leadId,
 						'renew_date' => date('Y-m-d'),
+						'type'	=>	'lead',
 						'created_by' => $_SESSION['username']
 					];
 					$this->db->replace('package_renew_detail', $renew_data);

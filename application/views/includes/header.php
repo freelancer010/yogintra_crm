@@ -300,7 +300,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="<?= PANELURL . 'renewal' ?>" class="nav-link">
+                                        <a href="<?= PANELURL . 'renewal?type=customer' ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Renewal</p>
                                         </a>
@@ -343,12 +343,27 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
                         <?php } ?>
                         <?php if ($_SESSION['admin_role_id'] == 13) { ?>
                             <li class="nav-item">
-                                <a href="<?= PANELURL ?>yoga-bookings" class="nav-link">
-                                    <i class="nav-icon fas fa-calendar"></i>
+                                <a href="<?= PANELURL . 'yoga-bookings' ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-calender"></i>
                                     <p>
                                         Yoga Center
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'renewal?type=yoga' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Renewal</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'yoga-bookings' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Yoga Center</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         <?php } ?>
                         <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2 || $_SESSION['admin_role_id'] == 5) { ?>
@@ -361,12 +376,27 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= PANELURL ?>yoga-bookings" class="nav-link">
+                                <a href="<?= PANELURL . 'yoga-bookings' ?>" class="nav-link">
                                     <i class="nav-icon fas fa-calendar"></i>
                                     <p>
                                         Yoga Center
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'renewal?type=yoga' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Renewal</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'yoga-bookings' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Yoga Center</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="<?= PANELURL . 'accounts' ?>" class="nav-link">

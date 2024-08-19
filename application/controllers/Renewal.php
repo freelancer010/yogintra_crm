@@ -19,12 +19,13 @@ class Renewal extends CI_Controller
 
 	public function index()
 	{
-		$this->load->view('renewal');
+		$table = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'yoga-renewal' : 'renewal';
+
+		$this->load->view($table);
 	}
 
 	public function getRenewal()
 	{
-		error_reporting(0);
 		if ($_POST['startDate'] != '') {
 			$this->db->where(['date(created_date)>=' => $_POST['startDate']]);
 		}
@@ -42,7 +43,10 @@ class Renewal extends CI_Controller
 				'status' => 5,
 			];
 		}
-		$resp = $this->db->where($where)->order_by('created_date', 'desc')->get('leads')->result_array();
+
+		$table = (!empty($_POST['type']) && $_POST['type'] == 'yoga') ? 'yoga' : 'leads';
+		
+		$resp = $this->db->where($where)->order_by('created_date', 'desc')->get($table)->result_array();
 
 		if (count($resp) > 0) {
 			foreach ($resp as &$item) {
@@ -85,19 +89,28 @@ class Renewal extends CI_Controller
 
 	public function editRenewal()
 	{
-		$leadId = $_POST['leadId'];
-		$data['package_end_date'] = $this->input->post('renewalDate');
-		if ($data['package_end_date'] >= date('Y-m-d')) {
-			$data['status'] = 3;
-		}
+		$table = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'yoga' : 'leads';
+		$status = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 1 : 3;
+		$pay = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'totalPayAmount' : 'full_payment';
 
-		$resp = $this->db->where('id', $leadId)->update('leads', $data);
+		
+		$leadId = $_POST['leadId'];
+		$data['package_end_date'] 	= $this->input->post('renewalDate');
+		$data[$pay] 				= $this->input->post('renewalAmount');
+		$data['totalPayDate'] 		= date('Y-m-d');
+		$data['status'] 			= $status;
+
+		$resp = $this->db->where('id', $leadId)->update($table, $data);
 		if ($resp) {
 			$renew_data = [
-				'lead_id' => $leadId,
-				'renew_date' => $data['package_end_date'],
-				'created_by' => $_SESSION['username']
+				'lead_id' 		=> $leadId,
+				'renew_date' 	=> $data['package_end_date'],
+				'renew_amount' 	=> $data[$pay],
+				'type' 			=> $table,
+				'created_by' 	=> $_SESSION['username'],
+				'created_date' 	=> date('Y-m-d H:i:s')
 			];
+
 			$this->db->replace('package_renew_detail', $renew_data);
 
 			$response = [
