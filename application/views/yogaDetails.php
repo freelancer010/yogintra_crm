@@ -139,8 +139,10 @@ $this->load->view('includes/footer');
                                         <a class="float-right"></a>
                                     </li>`
                     }
-                                <a href="${PANELURL}yoga-bookings/editEvents?id=${resp.id}&yoga=1" class="btn btn-primary btn-block"><b>Edit Yoga Center</b></a>
-                                ${respRenewDetails.length > 0 ? `<li class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3" id="renDetail"><b style="border-bottom:1px solid">Package Renew History</b></li>`: ''}`);
+
+                    ${resp.status != 5 ? `<a href="${PANELURL}yoga-bookings/editEvents?id=${resp.id}&yoga=1" class="btn btn-primary btn-block"><b>Edit Yoga Center</b></a>` : ''}            
+                    
+                                ${respRenewDetails.length > 0 ? `<li class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3" id="renDetail"><b style="border-bottom:1px solid">Package Renew History</b></li>` : ''}`);
 
                 $.each(resppaymentDetails, function () {
                     newRowAdd =
@@ -158,10 +160,13 @@ $this->load->view('includes/footer');
                 $.each(respRenewDetails, function () {
                     newRowAdd =
                         `<div id = "row" class="row mt-2">
-                            <div class="input-group col-6">
+                            <div class="input-group col-4">
                                 <p><b>Renew Date:</b>&nbsp;&nbsp;${this.renew_date}</p>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
+                                <p><b>Renew Amount:</b>&nbsp;&nbsp;${(this.renew_amount)}</p>
+                            </div>
+                            <div class="col-4">
                                 <p><b>Renew By:</b>&nbsp;&nbsp;${(this.created_by)}</p>
                             </div>
                         </div>`;

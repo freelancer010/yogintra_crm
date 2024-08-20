@@ -33,6 +33,8 @@ class YogaBooking extends CI_Controller
 				$this->db->where('totalPayAmount < package');
 			}
 
+			$this->db->where('status', 1);
+
 			$resp = $this->db->order_by('created_date', 'desc')->get('yoga')->result_array();
 			if (count($resp) > 0) {
 				$response['success'] = 1;
@@ -46,8 +48,6 @@ class YogaBooking extends CI_Controller
 			$this->load->view('yoga');
 		}
 	}
-
-
 	public function editEvents()
 	{
 		$this->load->view('editYoga');

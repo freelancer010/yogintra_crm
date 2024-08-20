@@ -71,12 +71,14 @@ class Renewal extends CI_Controller
 
 	public function deleteData()
 	{
+		$table = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'yoga' : 'leads';
+
 		$id = $_POST['id'];
-		$resp = $this->db->where('id', $id)->update('leads', ['status' => 0]);
+		$resp = $this->db->where('id', $id)->update($table, ['status' => 0]);
 		if ($resp) {
 			$response = [
 				'success' => 1,
-				'message' => 'Lead deleted Successfully'
+				'message' => 'Renewal deleted Successfully'
 			];
 		} else {
 			$response = [
