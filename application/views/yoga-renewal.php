@@ -139,11 +139,11 @@ $this->load->view('includes/footer');
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return `<a href="${PANELURL}profile?id=${row.id}">${row.name}</a>`;
+                            return `<a href="${PANELURL}yoga-bookings/view?id=${row.id}">${row.client_name}</a>`;
                         }
                     },
                     {
-                        data: "number"
+                        data: "client_number"
                     },
                     {
                         data: "country"
@@ -195,7 +195,7 @@ $this->load->view('includes/footer');
         let postData = {
             'id': id,
         }
-        ajaxCallData(PANELURL + 'renewal/deleteData?type=lead', postData, 'POST')
+        ajaxCallData(PANELURL + 'renewal/deleteData?type=yoga', postData, 'POST')
             .then(function (result) {
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {
@@ -229,7 +229,7 @@ $this->load->view('includes/footer');
 
             var serializedData = $(this).serialize();
 
-            ajaxCallData(PANELURL + 'renewal/editRenewal?type=lead', serializedData, 'POST')
+            ajaxCallData(PANELURL + 'renewal/editRenewal?type=yoga', serializedData, 'POST')
                 .then(function (result) {
                     jsonCheck = isJSON(result);
                     if (jsonCheck == true) {
