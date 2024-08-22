@@ -12,9 +12,9 @@ class Cron extends CI_Controller
 	public function updateRenewData()
 	{
 		$this->db->where(['package_end_date >=' => date('Y-m-d'), 'status' => 5, 'type' => 'lead'])->update('leads', ['status' => 3]);
-		$this->db->where(['package_end_date >=' => date('Y-m-d'), 'status' => 5, 'type' => 'yoga'])->update('yoga', ['status' => 1]);
+		$this->db->where(['DATE(e_date) >=' => date('Y-m-d'), 'status' => 5, 'type' => 'yoga'])->update('yoga', ['status' => 1]);
 		$this->db->where(['package_end_date <' => date('Y-m-d'), 'package_end_date is not null'])->update('leads', ['status' => 5]);
-		$this->db->where(['package_end_date <' => date('Y-m-d'), 'package_end_date is not null'])->update('yoga', ['status' => 5]);
+		$this->db->where(['DATE(e_date) <' => date('Y-m-d'), 'package_end_date is not null'])->update('yoga', ['status' => 5]);
 
 		$response = [
 			'success' => 1,

@@ -114,7 +114,7 @@ $this->load->view('includes/footer');
                                     </a>
                                 </li>
                                 <li class="list-group-item col-lg-6 col-sm-12">
-                                    <b>Package End Date&nbsp;:</b><span class="mx-2">${resp.package_end_date}</span>
+                                    <b>Package End Date&nbsp;:</b><span class="mx-2">${resp.e_date}</span>
                                     <a class="float-right">
                                     </a>
                                 </li>

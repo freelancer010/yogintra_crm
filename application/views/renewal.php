@@ -87,7 +87,8 @@ $this->load->view('includes/footer');
                 <div class="modal-body">
                     <div class="form-group col-lg-6 col-sm-12">
                         <label for="clientName">Renew Package End Date</label>
-                        <input required type="hidden" class="form-control" id="leadId" name="leadId" value="">
+                        <input required type="hidden" id="leadId" name="leadId" value="">
+                        <input required type="hidden" id="leadPreviousAmount" name="leadPreviousAmount" value="">
                         <input required type="date" class="form-control" id="renewalDate" name="renewalDate"
                             placeholder="Enter Renewal Date" value="">
                     </div>
@@ -167,8 +168,8 @@ $this->load->view('includes/footer');
                         data: null,
                         render: function (data, type, row) {
                             return `<div class="d-flex justify-content-between">
-                                            <button title="renew this row" onclick="renewData(${row.id})" class="btn btn-warning btn-xs">
-                                                <i class="fa fa-edit mr5"></i>
+                                            <button title="renew this row" onclick="renewData(${row.id},${row.full_payment})" class="btn btn-success btn-xs">
+                                                <i class="fas fa-retweet"></i>
                                             </button>
                                             <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">
                                                 <i class="fa fa-trash mr5"></i>
@@ -216,9 +217,10 @@ $this->load->view('includes/footer');
             });
     };
 
-    let renewData = (id) => {
+    let renewData = (id,amount) => {
         $("#exampleModal").modal('show');
         $("#leadId").val(id);
+        $("#leadPreviousAmount").val(amount);
     }
 </script>
 
