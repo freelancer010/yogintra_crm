@@ -37,7 +37,7 @@ $this->load->view('includes/header');
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <p class="text-muted text-center my-12">Profile Details</p><br /><br />
+                            <p class="text-muted text-center my-12" style="font-size:28px">Profile Details</p><br /><br />
                             <ul class="list-groups list-group-unbordered mb-3 row align-items-start"></ul>
                         </div>
                     </div>
@@ -240,7 +240,7 @@ $this->load->view('includes/footer');
                                     </li>`
                         }` : ''}
                         
-                        ${resp.status != 5 ? `<a href="${PANELURL}profile/edit?id=${resp.id}" class="btn btn-primary btn-block"><b>Edit Profile</b></a>` : ''}
+                        ${resp.status != 5 ? `<a href="${PANELURL}profile/edit?id=${resp.id}" class="btn btn-primary btn-block mt-5"><b>Edit Profile</b></a>` : ''}
 
                         ${respRenewDetails.length > 0 ? `<li class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3" id="renDetail">
                                                     <b style="border-bottom:1px solid">Package Renew History</b>
