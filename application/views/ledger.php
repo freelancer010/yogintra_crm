@@ -48,7 +48,7 @@ $this->load->view('includes/header');
                                 <option value='' selected>Select Your Class type</option>
 
                                 <option value="Home Visit Yoga Session">Home Visit Yoga</option>
-                                <option value="Private Online Session">Private Online Yoga</option>
+                                <option value="Private Online Yoga">Private Online Yoga</option>
                                 <option value="Group Online Session">Group Online Yoga</option>
                                 <option value="Corporate Yoga Booking">Corporate Yoga</option>
                                 <option value="Retreat">Retreat</option>

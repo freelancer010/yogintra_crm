@@ -82,7 +82,7 @@ $this->load->view('includes/header');
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value= '' selected>Select Your Class type</option>
 
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Home Visit Yoga Session">Home Visit Yoga</option>
-                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Private Online Session">Private Online Yoga</option>
+                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Private Online Yoga">Private Online Yoga</option>
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Group Online Session">Group Online Yoga</option>
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Corporate Yoga Booking">Corporate Yoga</option>
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Retreat">Retreat</option>

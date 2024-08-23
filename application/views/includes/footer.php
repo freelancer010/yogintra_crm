@@ -82,6 +82,7 @@
             $('#' + table_id).DataTable({
                 data: jsonData,
                 columns: cols,
+                "order": [[0, 'desc']],
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,

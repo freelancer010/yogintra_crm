@@ -144,7 +144,7 @@ $this->load->view('includes/header');
                                             <select id="class_type" name="class" class="form-control">
                                                 <option selected>Select Your Class type</option>
                                                 <option value="Home Visit Yoga Session">Home Visit Yoga Session</option>
-                                                <option value="Private Online Session">Private Online Session</option>
+                                                <option value="Private Online Yoga">Private Online Yoga</option>
                                                 <option value="Group Online Session">Group Online Session</option>
                                                 <option value="Teacher Training Courses">TTC
                                                 </option>

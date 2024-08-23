@@ -105,8 +105,8 @@ class Accounting extends CI_Controller
 					}
 				}
 
-				// Combine Private Online Session and Private Online Yoga
-				elseif ($classType === 'Private Online Session' || $classType === 'Private Online Yoga') {
+				// Private Online Yoga
+				elseif ($classType === 'Private Online Yoga') {
 					$classType = 'Private Online Yoga';
 					if (isset($combinedData[$classType])) {
 						$combinedData[$classType]['full_payment'] += $fullPayment;
