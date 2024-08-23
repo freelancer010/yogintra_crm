@@ -180,7 +180,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4"
-            style="background-color: #FEEEEF!important; color:red">
+            style="background-color: #ffffff!important; color:red">
             <!-- Brand Logo -->
             <!-- <a href="<?= PANELURL . 'dashboard' ?>" class="brand-link">
                 <img style="margin-left:2rem" style="width:60%" src="<?= base_url('assets/') ?>logo.png"
@@ -530,7 +530,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
             }
 
             .navbar-white {
-                background-color: #feeeef !important;
+                background-color: #ffffff !important;
                 color: #1f2d3d;
             }
 
@@ -539,7 +539,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
             }
 
             .card {
-                background-color: #feeeef !important;
+                background-color: #ffffff !important;
             }
 
             .table td,
@@ -558,5 +558,9 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
 
             table a {
                 color: #01aeb7 !important;
+            }
+
+            .user-panel img{
+                width: 3.5rem !important;
             }
         </style>

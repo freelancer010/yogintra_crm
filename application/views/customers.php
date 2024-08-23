@@ -134,18 +134,20 @@ $this->load->view('includes/footer');
                             data: null,
                             render: function (data, type, row) {
                                 return `<div class="d-flex justify-content-between px-3">
-                                        <a href="profile/edit?id=${row.id}" title="edit" class="btn btn-warning btn-xs mr5">
+                                            <a href="profile/edit?id=${row.id}" title="edit" class="btn btn-primary btn-xs mr5">
                                                 <i class="fa fa-edit"></i>
-                                        </a>
-                                        <button href="#" title="delete this row" onclick="deletecustomer(${row.id})" class="btn btn-danger btn-xs">
-                                        <i class="fa fa-trash"></i></button>
-                                        <button title="change status to tellecalling" onclick="change_back_toLeads(${row.id})" class="btn btn-success btn-xs mr5">
-                                            <i class="fa fa-reply mr5"></i>
-                                        </button>
-                                        
-                                            <a target ="_blank" href="invoice?id=${row.id}" title="download invoice" class="btn btn-secondary btn-xs mr5">
+                                            </a>
+                                            
+                                            <a target ="_blank" href="invoice?id=${row.id}" title="download invoice" class="btn btn-secondary btn-xs mr5 text-white">
                                                 <i class="fa fa-download"></i>
                                             </a>
+                                            <button href="#" title="delete this row" onclick="deletecustomer(${row.id})" class="btn btn-danger btn-xs">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            
+                                            <button title="change status to tellecalling" onclick="change_back_toLeads(${row.id})" class="btn btn-success btn-xs mr5">
+                                                <i class="fa fa-reply mr5"></i>
+                                            </button>
                                         </div>`;
                             }
                         }
