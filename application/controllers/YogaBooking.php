@@ -119,7 +119,7 @@ class YogaBooking extends CI_Controller
 					}
 				}
 
-				if (!empty($data['e_date'])) {
+				if (!empty($data['e_date']) && empty($_POST['eventId'])) {
 					$renew_data = [
 						'lead_id' => $eventId,
 						'renew_date' => date('Y-m-d'),

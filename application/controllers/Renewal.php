@@ -94,9 +94,10 @@ class Renewal extends CI_Controller
 		$table = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'yoga' : 'leads';
 		$status = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 1 : 3;
 		$pay = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'totalPayAmount' : 'full_payment';
+		$date_col = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'e_date' : 'package_end_date';
 
 		$leadId = $_POST['leadId'];
-		$data['package_end_date'] = $this->input->post('renewalDate');
+		$data[$date_col] = $this->input->post('renewalDate');
 		$data[$pay] = $this->input->post('leadPreviousAmount') + $this->input->post('renewalAmount');
 		$data['totalPayDate'] = date('Y-m-d');
 		$data['status'] = $status;
@@ -105,7 +106,7 @@ class Renewal extends CI_Controller
 		if ($resp) {
 			$renew_data = [
 				'lead_id' => $leadId,
-				'renew_date' => $data['package_end_date'],
+				'renew_date' => $this->input->post('renewalDate'),
 				'renew_amount' => $this->input->post('renewalAmount'),
 				'type' => $table,
 				'created_by' => $_SESSION['username'],
