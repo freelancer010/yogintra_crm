@@ -305,7 +305,7 @@ $this->load->view('includes/footer');
 
                     $('#remarks1').val() !='' ? $('#atemptDate1').val(response.attempt1Date) : $('#atemptDate1').val(date);
                     $('#remarks2').val() !='' ? $('#atemptDate2').val(response.attempt2Date) : $('#atemptDate2').val(date);
-                    $('#remarks3').val() !='' ? $('#atemptDate3').val(response.attempt2Date) : $('#atemptDate3').val(date);
+                    $('#remarks3').val() !='' ? $('#atemptDate3').val(response.attempt3Date) : $('#atemptDate3').val(date);
 
                     var html = '';
                     html+=`<select id="select_trainer" name="trainer" class="form-control select_trainer editInputBox">

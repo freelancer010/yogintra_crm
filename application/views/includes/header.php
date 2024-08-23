@@ -530,7 +530,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
             }
 
             .navbar-white {
-                background-color: #feeeef !important;
+                background-color: #ffffff !important;
                 color: #1f2d3d;
             }
 
@@ -539,7 +539,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
             }
 
             .card {
-                background-color: #feeeef !important;
+                background-color: #ffffff !important;
             }
 
             .table td,

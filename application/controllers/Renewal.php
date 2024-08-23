@@ -45,7 +45,7 @@ class Renewal extends CI_Controller
 		}
 
 		$table = (!empty($_POST['type']) && $_POST['type'] == 'yoga') ? 'yoga' : 'leads';
-		
+
 		$resp = $this->db->where($where)->order_by('created_date', 'desc')->get($table)->result_array();
 
 		if (count($resp) > 0) {
@@ -95,22 +95,21 @@ class Renewal extends CI_Controller
 		$status = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 1 : 3;
 		$pay = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'totalPayAmount' : 'full_payment';
 
-		
 		$leadId = $_POST['leadId'];
-		$data['package_end_date'] 	= $this->input->post('renewalDate');
-		$data[$pay] 				= $this->input->post('renewalAmount');
-		$data['totalPayDate'] 		= date('Y-m-d');
-		$data['status'] 			= $status;
+		$data['package_end_date'] = $this->input->post('renewalDate');
+		$data[$pay] = $this->input->post('leadPreviousAmount') + $this->input->post('renewalAmount');
+		$data['totalPayDate'] = date('Y-m-d');
+		$data['status'] = $status;
 
 		$resp = $this->db->where('id', $leadId)->update($table, $data);
 		if ($resp) {
 			$renew_data = [
-				'lead_id' 		=> $leadId,
-				'renew_date' 	=> $data['package_end_date'],
-				'renew_amount' 	=> $data[$pay],
-				'type' 			=> $table,
-				'created_by' 	=> $_SESSION['username'],
-				'created_date' 	=> date('Y-m-d H:i:s')
+				'lead_id' => $leadId,
+				'renew_date' => $data['package_end_date'],
+				'renew_amount' => $this->input->post('renewalAmount'),
+				'type' => $table,
+				'created_by' => $_SESSION['username'],
+				'created_date' => date('Y-m-d H:i:s')
 			];
 
 			$this->db->replace('package_renew_detail', $renew_data);

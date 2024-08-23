@@ -102,11 +102,11 @@ $this->load->view('includes/header');
                                             placeholder="Enter your package">
                                     </div>
 
-                                    <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
+                                    <!-- <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
                                         <label for="packageEndDate">Package End Date</label>
                                         <input required type="date" class="form-control" id="packEndDate"
                                             name="packageEndDate" placeholder="Enter Package End Date">
-                                    </div>
+                                    </div> -->
 
                                     <div class="form-group col-12" id="fullPaymentType">
                                         <label>Type of Payment</label>

@@ -223,14 +223,30 @@ class Invoice extends CI_Controller
 				
 				<br/>
 				<br/>
-				<br/>
-				<br/>
 				<table style=" width: 100%; !important">
 					<tbody>
 						<tr>
 							<td>
-								<table style=" width: 25%; !important">
+								<table style="width: 35%; !important">
 									<tbody>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
 										<tr>
 											<td>
 												Bank Acc:-
@@ -254,7 +270,7 @@ class Invoice extends CI_Controller
 										</tr>
 										<tr>
 											<td>
-												Acc:-
+												Acc Type:-
 											</td>
 											<td>
 												Current
@@ -294,6 +310,10 @@ class Invoice extends CI_Controller
 						</tr>
 					</tbody>
 				</table>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
 
 				<table style=" width: 100%; !important">
 					<tbody>

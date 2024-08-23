@@ -84,7 +84,7 @@ class Accounting extends CI_Controller
 			$query = "(SELECT class_type, sum(full_payment) full_payment, sum(payTotrainer) payTotrainer FROM leads WHERE status <> '0' and class_type != '' {$filterwhere} group by class_type) 
                     UNION ALL (SELECT 'Expense' class_type, '0' full_payment, sum(expenseAmount) payTotrainer FROM expense where 1=1 {$filterwhere} ) 
                     UNION ALL (SELECT class_type, sum(totalPayAmount) full_payment, '0' payTotrainer FROM events where 1=1 {$filterwhere}  group by class_type)
-                    UNION ALL (SELECT class_type, sum(totalPayAmount) full_payment, '0' payTotrainer FROM yoga where 1=1 {$filterwhere}  group by class_type)";
+                    UNION ALL (SELECT 'Client Yoga Center' class_type, sum(totalPayAmount) full_payment, '0' payTotrainer FROM yoga where 1=1 {$filterwhere}  group by class_type)";
 			$customers = $this->db->query($query)->result_array();
 
 			// Combine and rename class types
@@ -169,9 +169,6 @@ class Accounting extends CI_Controller
 					'message' => 'No data found!'
 				];
 			}
-
-			// echo '<pre>';
-			// print_r($response);
 
 			echo json_encode($response);
 		} else {
