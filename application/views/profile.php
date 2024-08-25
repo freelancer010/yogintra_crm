@@ -37,7 +37,8 @@ $this->load->view('includes/header');
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <p class="text-muted text-center my-12" style="font-size:28px">Profile Details</p><br /><br />
+                            <p class="text-muted text-center my-12" style="font-size:28px">Profile Details</p>
+                            <br /><br />
                             <ul class="list-groups list-group-unbordered mb-3 row align-items-start"></ul>
                         </div>
                     </div>
@@ -48,8 +49,44 @@ $this->load->view('includes/header');
 <?php
 $this->load->view('includes/footer');
 ?>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="renewalForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Renewal Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-lg-6 col-sm-12">
+                        <label for="clientName">Renew Package End Date</label>
+                        <input required type="hidden" id="leadId" name="leadId" value="">
+                        <input required type="hidden" id="leadPreviousAmount" name="leadPreviousAmount" value="">
+                        <input required type="date" class="form-control" id="renewalDate" name="renewalDate"
+                            placeholder="Enter Renewal Date" value="" readonly>
+                    </div>
+                    <div class="form-group col-lg-6 col-sm-12">
+                        <label for="clientName">Package Renewal Amount</label>
+                        <input required type="number" class="form-control" id="renewalAmount" name="renewalAmount"
+                            placeholder="Enter Renewal Amount" min="0" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     let param = "<?= $_GET['id'] ?>";
+
     let changeReadStatus = () => {
         var apiUrl = PANELURL + 'profile/changeReadStatus';
         ajaxCallData(apiUrl, { 'id': param }, 'POST')
@@ -60,6 +97,7 @@ $this->load->view('includes/footer');
                 console.log(err);
             });
     }
+
     let getData = () => {
         var apiUrl = PANELURL + 'profile/view';
         ajaxCallData(apiUrl, { 'id': param }, 'POST')
@@ -244,6 +282,20 @@ $this->load->view('includes/footer');
 
                         ${respRenewDetails.length > 0 ? `<li class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3" id="renDetail">
                                                     <b style="border-bottom:1px solid">Package Renew History</b>
+                                                    <div id = "row" class="row mt-2">
+                                                        <div class="col-3">
+                                                            <p><b>Renew Date</b></p>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <p><b>Renew Amount</b></p>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <p><b>Renew By</b></p>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <p><b>Action</b></p>
+                                                        </div>
+                                                    </div>
                                                 </li>`: ''}`);
 
                 $.each(resppaymentDetails, function () {
@@ -262,14 +314,22 @@ $this->load->view('includes/footer');
                 $.each(respRenewDetails, function () {
                     newRowAdd =
                         `<div id = "row" class="row mt-2">
-                            <div class="input-group col-4">
-                                <p><b>Renew Date:</b>&nbsp;&nbsp;${this.renew_date}</p>
+                            <div class="col-3">
+                                <p>${this.renew_date}</p>
                             </div>
-                            <div class="col-4">
-                                <p><b>Renew Amount:</b>&nbsp;&nbsp;${(this.renew_amount)}</p>
+                            <div class="col-3">
+                                <p>${(this.renew_amount)}</p>
                             </div>
-                            <div class="col-4">
-                                <p><b>Renew By:</b>&nbsp;&nbsp;${(this.created_by)}</p>
+                            <div class="col-3">
+                                <p>${(this.created_by)}</p>
+                            </div>
+                            <div class="col-3">
+                                <button title="renew this row" onclick='renewData(${JSON.stringify(this)},${resp.full_payment})' class="btn btn-success btn-xs">
+                                    <i class="fas fa-retweet"></i>
+                                </button>
+                                <a target ="_blank" href="invoice?id=${resp.id}&renew_amount=${this.renew_amount}" title="download invoice" class="btn btn-secondary btn-xs mr5 text-white">
+                                    <i class="fa fa-download"></i>
+                                </a>
                             </div>
                         </div>`;
                     $('#renDetail').append(newRowAdd);
@@ -279,6 +339,46 @@ $this->load->view('includes/footer');
                 console.log(err);
             });
     };
+
     changeReadStatus();
+
     getData();
+</script>
+
+<script>
+    let renewData = (row, prev_payment) => {
+        $("#exampleModal").modal('show');
+        $("#leadId").val(row.lead_id);
+        $("#leadPreviousAmount").val(prev_payment - row.renew_amount);
+        $("#renewalAmount").val(row.renew_amount);
+        $("#renewalDate").val(row.renew_date);
+    }
+    
+    $(document).ready(function () {
+        $('#renewalForm').on('submit', function (event) {
+            event.preventDefault();
+
+            var serializedData = $(this).serialize();
+
+            ajaxCallData(PANELURL + 'renewal/editRenewal?type=lead', serializedData, 'POST')
+                .then(function (result) {
+                    jsonCheck = isJSON(result);
+                    if (jsonCheck == true) {
+                        resp = JSON.parse(result);
+                        if (resp.success == 1) {
+                            $("#exampleModal").modal('hide');
+                            notifyAlert('Data renewed successfully!', 'success');
+                            location.reload();
+                        } else {
+                            notifyAlert('You are not authorized!', 'danger');
+                        }
+                    } else {
+                        notifyAlert('You are not authorized!', 'danger');
+                    }
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        });
+    });
 </script>

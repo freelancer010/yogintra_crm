@@ -53,7 +53,7 @@ $this->load->view('includes/header');
                                         <th style="width:5% !important">ID</th>
                                         <th style="width:8% !important">Client Name</th>
                                         <th style="width:8% !important">Client Number</th>
-                                        <th style="width:10% !important">Yoga Center</th>
+                                        <!-- <th style="width:10% !important">Yoga Center</th> -->
                                         <th style="width:10% !important">Start Date</th>
                                         <th style="width:10% !important">End Date</th>
                                         <th style="width:5% !important">Full Pay</th>
@@ -107,7 +107,7 @@ $this->load->view('includes/footer');
                             }
                         },
                         { data: "client_number" },
-                        { data: "event_name"},
+                        // { data: "event_name"},
                         { data: "s_date"},
                         { data: "e_date"},
                         { data: "totalPayAmount"},

@@ -84,10 +84,10 @@ class Telecalling extends CI_Controller
 			];
 			$this->db->insert('yoga', $dataMain);
 
-			$data = $this->db->select('attempt1,attempt2,attempt3')->where(['id' => $id])->get('leads')->row_array();
-			$resp = false;
+			// $data = $this->db->select('attempt1,attempt2,attempt3')->where(['id' => $id])->get('leads')->row_array();
+			// $resp = false;
 
-			$resp = $this->db->where(['id' => $id])->update('leads', ['status' => 3]);
+			$resp = $this->db->where(['id' => $id])->update('leads', ['status' => 6]);
 
 		} else {
 			$data = $this->db->select('attempt1,attempt2,attempt3')->where(['id' => $id])->get('leads')->row_array();

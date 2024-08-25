@@ -26,19 +26,21 @@ $this->load->view('includes/header');
                         <div class="card-header yogintra align-items-center d-flex justify-content-between">
                             <div class="row align-items-center ml-auto" style="margin-bottom:-2px">
                                 <div class="filter d-flex justify-content-center align-items-center">
-                                    <div class="d-flex mr-1 align-items-center">                                  
-                                        <button  type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
+                                    <div class="d-flex mr-1 align-items-center">
+                                        <button type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
                                             Generate&nbsp;&nbsp;<i class="fas fa-arrow-right"></i>
                                         </button>
                                         <!-- <button type="button" class="btn btn-danger mr-3" onclick=reset()>reset</button> -->
                                     </div>
                                     <div class="d-flex mr-1 align-items-center">
                                         <!-- <label for="fromDate" class="exampleInputEmail1 mr-1 text-muted ">From</label> -->
-                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate" max="<?php echo date('Y-m-d');?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate"
+                                            max="<?php echo date('Y-m-d'); ?>">
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <label for="toDate" class="exampleInputEmail1 mt-1 mr-3 text-muted">To</label>
-                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate" max="<?php echo date('Y-m-d');?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate"
+                                            max="<?php echo date('Y-m-d'); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -54,8 +56,8 @@ $this->load->view('includes/header');
                                 <option value="Retreat">Retreat</option>
                                 <option value="Workshop">Workshop</option>
                                 <option value="Teacher Training Courses">TTC</option>
-
-                            </select>                            
+                                <option value="Yoga Center">Yoga Center</option>
+                            </select>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -82,7 +84,7 @@ $this->load->view('includes/footer');
     let filter = () => {
         let toDate = $("#toDate").val();
         let fromDate = $("#fromDate").val();
-        getData('all',fromDate,toDate);
+        getData('all', fromDate, toDate);
     }
 
     let reset = () => {
@@ -91,26 +93,20 @@ $this->load->view('includes/footer');
         getData();
     }
 
-    let getData = (class_type = 'all',startDate = '',endDate = '') => {
+    let getData = (class_type = 'all', startDate = '', endDate = '') => {
         var apiUrl = PANELURL + 'ledger';
-        ajaxCallData(apiUrl, {'class_type':class_type,startDate:startDate,endDate:endDate}, 'POST')
+        ajaxCallData(apiUrl, { 'class_type': class_type, startDate: startDate, endDate: endDate }, 'POST')
             .then(function (result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
                     response = resp.data;
                     let cols = [
-                        // {
-                        //     data: null,
-                        //     render: function (data, type, row) {
-                        //         return `<a href="${PANELURL}profile/${row.id}">${row.name}</a>`;
-                        //     }
-                        // },
                         { data: "name" },
                         { data: "full_payment" },
                         {
                             data: null,
                             render: function (data, type, row) {
-                                return row.created_date.slice(0,10);
+                                return (row.created_date != '' && row.created_date != undefined) ? row.created_date.slice(0, 10) : '';
                             }
                         },
                         { data: "trainerName" },
@@ -118,7 +114,7 @@ $this->load->view('includes/footer');
                         {
                             data: null,
                             render: function (data, type, row) {
-                                return row.trainerPayDate.slice(0,10);
+                                return (row.trainerPayDate != '' && row.trainerPayDate != undefined) ? row.trainerPayDate.slice(0, 10) : '';
                             }
                         }
                     ]
@@ -133,7 +129,7 @@ $this->load->view('includes/footer');
     };
     getData();
 
-    $('select').on('change', function() {
+    $('select').on('change', function () {
         getData(this.value);
     });
 </script>

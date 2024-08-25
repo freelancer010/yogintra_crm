@@ -5,7 +5,7 @@ class Invoice extends CI_Controller
 
 	function __construct()
 	{
-		parent::__construct(); // add library of Pdf $this->load->library('Pdf');
+		parent::__construct();
 	}
 
 	function index()
@@ -14,11 +14,8 @@ class Invoice extends CI_Controller
 		require_once(APPPATH . 'helpers/tcpdf/tcpdf.php');
 
 		$leadId = $_GET['id'];
+		$renewAmount = $_GET['renew_amount'] ?? '';
 		$customerData = $this->getLeadById($leadId)['data'];
-		// echo "<pre>";
-		// print_r($customerData);
-		// echo "</pre>";
-		// exit;
 
 		// create new PDF document
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -28,11 +25,6 @@ class Invoice extends CI_Controller
 		$pdf->SetAuthor('Yogintra');
 		$pdf->SetTitle('customer Invoice');
 		$pdf->SetSubject('');
-		// $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-		// set default header data
-		// $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
-		// $pdf->SetHeaderData('', '0', 'YOGINTRA'.' 006', 'CUTOMER INVOICE');
 
 		// set header and footer fonts
 		$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -46,9 +38,6 @@ class Invoice extends CI_Controller
 		$pdf->SetHeaderMargin(0);
 		$pdf->SetFooterMargin(0);
 
-		// set auto page breaks
-		// $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
 		// set image scale factor
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
@@ -57,8 +46,6 @@ class Invoice extends CI_Controller
 			require_once(dirname(__FILE__) . '/lang/eng.php');
 			$pdf->setLanguageArray($l);
 		}
-
-		// ---------------------------------------------------------
 
 		// set font
 		$pdf->SetFont('dejavusans', '', 10);
@@ -70,10 +57,9 @@ class Invoice extends CI_Controller
 		// add a page
 		$pdf->AddPage();
 
-		// writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
-		// writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
+		$customer_amount = !empty($renewAmount) ? $renewAmount : $customerData['full_payment'];
 
-		$due_amount = ((int) $customerData['package'] * (int) $customerData['quotation']) - (int) $customerData['full_payment'];
+		$due_amount = ((int) $customerData['package'] * (int) $customerData['quotation']) - (int) $customer_amount;
 		// create some HTML content
 		$html = '<table style=" width: 100%; !important">
 					<tbody>
@@ -89,7 +75,7 @@ class Invoice extends CI_Controller
 										<tr>
 											<td>
 												<strong style="padding: 1cm !important; text-transform: uppercase;background-color:#ddd">Invoice - </strong><span style="background-color:#ddd">#YI' . $_GET['id'] . '</span>
-												<div style="width:100%">Pay Date : ' . substr($customerData['demDate'], 0, 10) . '
+												<div style="width:100%">Pay Date : ' . substr($customerData['totalPayDate'], 0, 10) . '
 												<br/>Bil Date : ' . date('Y-m-d') . '</div>
 											</td>
 										</tr>
@@ -198,7 +184,7 @@ class Invoice extends CI_Controller
 								Paid Amount
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-								₹' . $customerData['full_payment'] . '
+								₹' . $customer_amount . '
 								</td>
 							</tr>
 							<tfoot>
@@ -685,11 +671,10 @@ class Invoice extends CI_Controller
 		require_once(APPPATH . 'helpers/tcpdf/tcpdf.php');
 
 		$leadId = $_GET['id'];
+		$renewAmount = $_GET['renew_amount'] ?? '';
+
 		$customerData = $this->getYoga($leadId)['data'];
-		// echo "<pre>";
-		// print_r(substr($customerData['totalPayDate'],0,10));
-		// echo "</pre>";
-		// exit;
+		$customer_amount = !empty($renewAmount) ? $renewAmount : $customerData['totalPayAmount'];
 
 		// create new PDF document
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -699,11 +684,6 @@ class Invoice extends CI_Controller
 		$pdf->SetAuthor('Yogintra');
 		$pdf->SetTitle('customer Invoice');
 		$pdf->SetSubject('');
-		// $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-		// set default header data
-		// $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
-		// $pdf->SetHeaderData('', '0', 'YOGINTRA'.' 006', 'CUTOMER INVOICE');
 
 		// set header and footer fonts
 		$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -717,9 +697,6 @@ class Invoice extends CI_Controller
 		$pdf->SetHeaderMargin(0);
 		$pdf->SetFooterMargin(0);
 
-		// set auto page breaks
-		// $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
 		// set image scale factor
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
@@ -728,8 +705,6 @@ class Invoice extends CI_Controller
 			require_once(dirname(__FILE__) . '/lang/eng.php');
 			$pdf->setLanguageArray($l);
 		}
-
-		// ---------------------------------------------------------
 
 		// set font
 		$pdf->SetFont('dejavusans', '', 10);
@@ -740,9 +715,6 @@ class Invoice extends CI_Controller
 
 		// add a page
 		$pdf->AddPage();
-
-		// writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
-		// writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
 		// create some HTML content
 		$html = '
@@ -877,7 +849,7 @@ class Invoice extends CI_Controller
 									₹' . $customerData['package'] . '
 								</td>
 								<td align="right" style="width:22%; border-top: 1px solid #eee; padding: 5px;">
-									₹' . $customerData['totalPayAmount'] . '
+									₹' . $customer_amount . '
 								</td>
 							</tr>
 							
@@ -892,7 +864,7 @@ class Invoice extends CI_Controller
 								+Other Charges
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-									₹' . ($customerData['totalPayAmount'] * 0.03) . '
+									₹' . ($customer_amount * 0.03) . '
 								</td>
 							</tr>
 
@@ -907,7 +879,7 @@ class Invoice extends CI_Controller
 								Paid Amount
 								</td>
 								<td align="right" style="width:25%; border-top: 1px solid #eee; padding: 5px;">
-									₹' . ($customerData['totalPayAmount']) . '
+									₹' . ($customer_amount) . '
 								</td>
 							</tr>
 							<tfoot>
@@ -925,7 +897,7 @@ class Invoice extends CI_Controller
 										<strong>Due Amount</strong>
 									</th>
 									<th  align="right" style="border-bottom: 1px solid #00000080; border-right: 1px solid #fff; color:#fff; font-weight:800; background-color:#00000060; padding: 5px;">
-										<strong>₹' . ($customerData['package'] - $customerData['totalPayAmount']) . '</strong>
+										<strong>₹' . ($customerData['package'] - $customer_amount) . '</strong>
 									</th>
 								</tr>
 							</tfoot>	
