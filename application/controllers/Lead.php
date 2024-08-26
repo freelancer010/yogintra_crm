@@ -265,7 +265,7 @@ class Lead extends CI_Controller
 				if (!empty($_POST['packageEndDate'])) {
 					$renew_data = [
 						'lead_id' => $leadId,
-						'renew_date' => date('Y-m-d'),
+						'renew_date' => date('Y-m-d H:i:s'),
 						'renew_amount' => $data['full_payment'],
 						'type' => 'leads',
 						'created_by' => $_SESSION['username'],

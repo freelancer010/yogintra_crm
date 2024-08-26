@@ -118,8 +118,8 @@ class Accounting extends CI_Controller
 				$fullPayment = (int) $customer['full_payment'];
 				$payToTrainer = (int) $customer['payTotrainer'];
 
-				// Combine Home Visit Yoga and Home Visit Yoga Session
-				if ($classType === 'Home Visit Yoga' || $classType === 'Home Visit Yoga Session') {
+				// Combine Home Visit Yoga and Home Visit Yoga
+				if ($classType === 'Home Visit Yoga' || $classType === 'Home Visit Yoga') {
 					$classType = 'Home Visit Yoga';
 					if (isset($combinedData[$classType])) {
 						$combinedData[$classType]['full_payment'] += $fullPayment;
@@ -140,8 +140,8 @@ class Accounting extends CI_Controller
 					}
 				}
 
-				// Combine Group Online Yoga and Group Online Session
-				elseif ($classType === 'Group Online Session' || $classType === 'Group Online Yoga') {
+				// Combine Group Online Yoga and Group Online Yoga
+				elseif ($classType === 'Group Online Yoga' || $classType === 'Group Online Yoga') {
 					$classType = 'Group Online Yoga';
 					if (isset($combinedData[$classType])) {
 						$combinedData[$classType]['full_payment'] += $fullPayment;
@@ -151,8 +151,8 @@ class Accounting extends CI_Controller
 					}
 				}
 
-				// Combine Corporate Yoga Booking
-				elseif ($classType === 'Corporate Yoga Booking') {
+				// Combine Corporate Yoga
+				elseif ($classType === 'Corporate Yoga') {
 					$classType = 'Corporate Yoga';
 					if (isset($combinedData[$classType])) {
 						$combinedData[$classType]['full_payment'] += $fullPayment;
@@ -161,8 +161,8 @@ class Accounting extends CI_Controller
 						$combinedData[$classType] = ['class_type' => $classType, 'full_payment' => $fullPayment, 'payTotrainer' => $payToTrainer];
 					}
 				}
-				// Combine Teacher Training Courses
-				elseif ($classType === 'Teacher Training Courses') {
+				// Combine TTC
+				elseif ($classType === 'TTC') {
 					$classType = 'TTC';
 					if (isset($combinedData[$classType])) {
 						$combinedData[$classType]['full_payment'] += $fullPayment;

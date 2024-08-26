@@ -79,7 +79,7 @@ $this->load->view('includes/header');
                                                 <option selected value=''>Select Your Event type</option>
                                                 <option value="Retreat">Retreat</option>
                                                 <option value="Workshop">Workshop</option>
-                                                <option value="Teacher Training Courses">TTC</option>
+                                                <option value="TTC">TTC</option>
                                             </select>
                                         </div>
                                        

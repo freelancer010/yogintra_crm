@@ -89,7 +89,7 @@ $this->load->view('includes/footer');
                         <label for="clientName">Renew Package End Date</label>
                         <input required type="hidden" id="leadId" name="leadId" value="">
                         <input required type="hidden" id="leadPreviousAmount" name="leadPreviousAmount" value="">
-                        <input required type="date" class="form-control" id="renewalDate" name="renewalDate"
+                        <input required type="datetime-local" class="form-control" id="renewalDate" name="renewalDate"
                             placeholder="Enter Renewal Date" value="">
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">

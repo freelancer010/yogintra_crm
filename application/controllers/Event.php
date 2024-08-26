@@ -63,9 +63,9 @@ class Event extends CI_Controller {
 			$resp = $this->db->get('events')->result_array();
 			foreach ($resp as &$event) {
                 if (isset($event['class_type'])) {
-                    // Convert 'TTC' to 'Teacher Training Courses'
+                    // Convert 'TTC' to 'TTC'
                     if ($event['class_type'] == 'TTC') {
-                        $event['class_type'] = 'Teacher Training Courses';
+                        $event['class_type'] = 'TTC';
                     }
                 }
             }

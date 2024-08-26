@@ -69,9 +69,6 @@ class YogaBooking extends CI_Controller
 			$data['e_date'] = $this->input->post('date') ?? $this->input->post('end_date');
 			$data['package'] = $this->input->post('package');
 			$data['payment_type'] = $this->input->post('payment_type');
-			// if (!empty($_POST['packageEndDate'])) {
-			// 	$data['package_end_date'] = $this->input->post('packageEndDate');
-			// }
 
 			if ($this->input->post('payment_type') == 'Full Payment') {
 				$data['totalPayAmount'] = $this->input->post('totalPayAmount');
@@ -122,7 +119,7 @@ class YogaBooking extends CI_Controller
 				if (!empty($data['e_date']) && empty($_POST['eventId'])) {
 					$renew_data = [
 						'lead_id' => $eventId,
-						'renew_date' => date('Y-m-d'),
+						'renew_date' => date('Y-m-d H:i:s'),
 						'renew_amount' => $data['totalPayAmount'],
 						'type' => 'yoga',
 						'created_by' => $_SESSION['username'],

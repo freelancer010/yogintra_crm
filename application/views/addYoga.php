@@ -77,7 +77,7 @@ $this->load->view('includes/header');
                                             <option selected value=''>Select Your Event type</option>
                                             <option value="Retreat">Retreat</option>
                                             <option value="Workshop">Workshop</option>
-                                            <option value="Teacher Training Courses">Teacher Training Courses</option>
+                                            <option value="TTC">TTC</option>
                                         </select>
                                     </div> -->
                                     <div class="form-group col-lg-6 col-sm-12">
@@ -101,12 +101,6 @@ $this->load->view('includes/header');
                                         <input required type="text" class="form-control" id="package" name="package"
                                             placeholder="Enter your package">
                                     </div>
-
-                                    <!-- <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
-                                        <label for="packageEndDate">Package End Date</label>
-                                        <input required type="date" class="form-control" id="packEndDate"
-                                            name="packageEndDate" placeholder="Enter Package End Date">
-                                    </div> -->
 
                                     <div class="form-group col-12" id="fullPaymentType">
                                         <label>Type of Payment</label>

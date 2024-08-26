@@ -69,7 +69,7 @@ $this->load->view('includes/footer');
                         <label for="clientName">Renew Package End Date</label>
                         <input required type="hidden" id="leadId" name="leadId" value="">
                         <input required type="hidden" id="leadPreviousAmount" name="leadPreviousAmount" value="">
-                        <input required type="date" class="form-control" id="renewalDate" name="renewalDate"
+                        <input required type="datetime-local" class="form-control" id="renewalDate" name="renewalDate"
                             placeholder="Enter Renewal Date" value="" readonly>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
@@ -171,16 +171,19 @@ $this->load->view('includes/footer');
                     ${respRenewDetails.length > 0 ? `<li class="list-group-item col-lg-12 col-sm-12 text-center  mt-5 mb-5 bg-info p-3" id="renDetail">
                                                 <b style="border-bottom:1px solid">Package Renew History</b>
                                                 <div id = "row" class="row mt-2">
-                                                    <div class="col-3">
+                                                    <div class="col-2">
+                                                        <p><b>Renew On</b></p>
+                                                    </div>
+                                                    <div class="col-2">
                                                         <p><b>Renew Date</b></p>
                                                     </div>
-                                                    <div class="col-3">
+                                                    <div class="col-2">
                                                         <p><b>Renew Amount</b></p>
                                                     </div>
-                                                    <div class="col-3">
+                                                    <div class="col-2">
                                                         <p><b>Renew By</b></p>
                                                     </div>
-                                                    <div class="col-3">
+                                                    <div class="col-4">
                                                         <p><b>Action</b></p>
                                                     </div>
                                                 </div>
@@ -202,20 +205,23 @@ $this->load->view('includes/footer');
                 $.each(respRenewDetails, function () {
                     newRowAdd =
                         `<div id = "row" class="row mt-2">
-                            <div class="col-3">
+                            <div class="col-2">
+                                <p>${this.created_date}</p>
+                            </div>
+                            <div class="col-2">
                                 <p>${this.renew_date}</p>
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
                                 <p>${(this.renew_amount)}</p>
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
                                 <p>${(this.created_by)}</p>
                             </div>
-                            <div class="col-3">
-                                <button title="renew this row" onclick='renewData(${JSON.stringify(this)},${resp.totalPayAmount})' class="btn btn-success btn-xs">
-                                    <i class="fas fa-retweet"></i>
+                            <div class="col-4">
+                                <button title="renew this row" onclick='renewData(${JSON.stringify(this)},${resp.totalPayAmount})' class="btn btn-warning btn-xs">
+                                    <i class="fas fa-edit"></i>
                                 </button>
-                                <a target ="_blank" href="invoice/yoga?id=${resp.id}&renew_amount=${this.renew_amount}" title="download invoice" class="btn btn-secondary btn-xs mr5 text-white">
+                                <a target ="_blank" href="${PANELURL}invoice/yoga?id=${resp.id}&renew_amount=${this.renew_amount}" title="download invoice" class="btn btn-secondary btn-xs mr5 text-white">
                                     <i class="fa fa-download"></i>
                                 </a>
                             </div>

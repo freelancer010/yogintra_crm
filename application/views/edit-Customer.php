@@ -143,14 +143,14 @@ $this->load->view('includes/header');
                                             <label>Type of Class</label>
                                             <select id="class_type" name="class" class="form-control">
                                                 <option selected>Select Your Class type</option>
-                                                <option value="Home Visit Yoga Session">Home Visit Yoga Session</option>
+                                                <option value="Home Visit Yoga">Home Visit Yoga</option>
                                                 <option value="Private Online Yoga">Private Online Yoga</option>
-                                                <option value="Group Online Session">Group Online Session</option>
-                                                <option value="Teacher Training Courses">TTC
+                                                <option value="Group Online Yoga">Group Online Yoga</option>
+                                                <option value="TTC">TTC
                                                 </option>
                                                 <option value="Retreat / Workshop Booking">Retreat / Workshop Booking
                                                 </option>
-                                                <option value="Corporate Yoga Booking">Corporate Yoga Booking</option>
+                                                <option value="Corporate Yoga">Corporate Yoga</option>
                                             </select>
                                         </div>
                                         <div class="form-group">

@@ -115,12 +115,6 @@ $this->load->view('includes/header');
                                             name="package" placeholder="Enter your package">
                                     </div>
 
-                                    <!-- <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
-                                        <label for="packageEndDate">Package End Date</label>
-                                        <input required type="date" class="form-control" id="packEndDate"
-                                            name="packageEndDate" placeholder="Enter Package End Date">
-                                    </div> -->
-
                                     <div class="form-group col-12" id="fullPaymentType">
                                         <label>Type of Payment</label>
                                         <select id="payment_type" name="payment_type"
@@ -207,7 +201,6 @@ $this->load->view('includes/footer');
                     $('#class_type').val(response.class_type);
                     // $('#eventName').val(response.event_name);
                     $('#package').val(response.package);
-                    // $('#packEndDate').val(response.package_end_date);
                     $('#sdate').val(response.s_date);
                     $('#edate').val(response.e_date);
 

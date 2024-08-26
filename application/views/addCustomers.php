@@ -80,13 +80,13 @@ $this->load->view('includes/header');
                                             <label>Type of Class</label>
                                             <select id="class_type" name="class" class="form-control editInputBox customEditInputBox">
                                                 <option selected value=''>Select Your Class type</option>
-                                                <option value="Home Visit Yoga Session">Home Visit Yoga</option>
+                                                <option value="Home Visit Yoga">Home Visit Yoga</option>
                                                 <option value="Private Online Yoga">Private Online Yoga</option>
-                                                <option value="Group Online Session">Group Online Yoga</option>
-                                                <option value="Corporate Yoga Booking">Corporate Yoga</option>
+                                                <option value="Group Online Yoga">Group Online Yoga</option>
+                                                <option value="Corporate Yoga">Corporate Yoga</option>
                                                 <option value="Retreat">Retreat</option>
                                                 <option value="Workshop">Workshop</option>
-                                                <option value="Teacher Training Courses">TTC</option>
+                                                <option value="TTC">TTC</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-lg-6 col-sm-12">
@@ -142,7 +142,7 @@ $this->load->view('includes/header');
                                         </div>
                                         <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
                                             <label for="packageEndDate">Package End Date</label>
-                                            <input required type="date" class="form-control editInputBox customEditInputBox" id="packEndDate" name="packageEndDate" placeholder="Enter Package End Date">
+                                            <input required type="datetime-local" class="form-control editInputBox customEditInputBox" id="packEndDate" name="packageEndDate" placeholder="Enter Package End Date">
                                         </div>
 										<div class="form-group col-lg-6 col-sm-12" id="fullPatrainerPaymentyment">
                                             <label for="trainerPayment">Trainer's Payment</label>

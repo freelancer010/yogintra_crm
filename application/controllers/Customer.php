@@ -83,7 +83,7 @@ class Customer extends CI_Controller
 				if (!empty($_POST['packageEndDate'])) {
 					$renew_data = [
 						'lead_id' => $leadId,
-						'renew_date' => date('Y-m-d'),
+						'renew_date' => date('Y-m-d H:i:s'),
 						'type'	=>	'lead',
 						'created_by' => $_SESSION['username']
 					];

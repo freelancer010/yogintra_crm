@@ -49,13 +49,13 @@ $this->load->view('includes/header');
                             <select id="class_type" name="class" class="form-control editInputBox col-lg-4 m-auto">
                                 <option value='' selected>Select Your Class type</option>
 
-                                <option value="Home Visit Yoga Session">Home Visit Yoga</option>
+                                <option value="Home Visit Yoga">Home Visit Yoga</option>
                                 <option value="Private Online Yoga">Private Online Yoga</option>
-                                <option value="Group Online Session">Group Online Yoga</option>
-                                <option value="Corporate Yoga Booking">Corporate Yoga</option>
+                                <option value="Group Online Yoga">Group Online Yoga</option>
+                                <option value="Corporate Yoga">Corporate Yoga</option>
                                 <option value="Retreat">Retreat</option>
                                 <option value="Workshop">Workshop</option>
-                                <option value="Teacher Training Courses">TTC</option>
+                                <option value="TTC">TTC</option>
                                 <option value="Yoga Center">Yoga Center</option>
                             </select>
                             <table id="example1" class="table table-bordered table-striped">

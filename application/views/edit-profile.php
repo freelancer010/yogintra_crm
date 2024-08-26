@@ -81,13 +81,13 @@ $this->load->view('includes/header');
                                                 <select <?php if($_SESSION['admin_role_id'] == 3){echo 'readonly style="cursor:not-allowed"';} ?>  id="class_type" name="class" class="form-control editInputBox customEditInputBox">
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value= '' selected>Select Your Class type</option>
 
-                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Home Visit Yoga Session">Home Visit Yoga</option>
+                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Home Visit Yoga">Home Visit Yoga</option>
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Private Online Yoga">Private Online Yoga</option>
-                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Group Online Session">Group Online Yoga</option>
-                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Corporate Yoga Booking">Corporate Yoga</option>
+                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Group Online Yoga">Group Online Yoga</option>
+                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Corporate Yoga">Corporate Yoga</option>
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Retreat">Retreat</option>
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Workshop">Workshop</option>
-                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Teacher Training Courses">TTC</option>
+                                                    <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="TTC">TTC</option>
                                                     <option <?php if($_SESSION['admin_role_id'] == 3){echo 'disabled';} ?> value="Yoga Center">Yoga Center</option>
                                                 </select>
                                             </div>
@@ -143,7 +143,7 @@ $this->load->view('includes/header');
                                             </div>
                                             <div class="form-group col-lg-6 col-sm-12" id="packageEndDate">
                                                 <label for="demopay">Package End Date</label>
-                                                <input type="date" class="form-control editInputBox customEditInputBox" id="packEndDate"
+                                                <input type="datetime-local" class="form-control editInputBox customEditInputBox" id="packEndDate"
                                                     name="packageEndDate" placeholder="Enter Package End Date">
                                             </div>
                                             <div class="form-group col-lg-6 col-sm-12" id="attempStatusHolder">
