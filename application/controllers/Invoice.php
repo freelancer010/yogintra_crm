@@ -374,10 +374,6 @@ class Invoice extends CI_Controller
 
 		$leadId = $_GET['id'];
 		$customerData = $this->getBookingProfile($leadId)['data'];
-		// echo "<pre>";
-		// print_r($customerData);
-		// echo "</pre>";
-		// exit;
 
 		// create new PDF document
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -387,11 +383,6 @@ class Invoice extends CI_Controller
 		$pdf->SetAuthor('Yogintra');
 		$pdf->SetTitle('customer Invoice');
 		$pdf->SetSubject('');
-		// $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-		// set default header data
-		// $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
-		// $pdf->SetHeaderData('', '0', 'YOGINTRA'.' 006', 'CUTOMER INVOICE');
 
 		// set header and footer fonts
 		$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -405,9 +396,6 @@ class Invoice extends CI_Controller
 		$pdf->SetHeaderMargin(0);
 		$pdf->SetFooterMargin(0);
 
-		// set auto page breaks
-		// $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
 		// set image scale factor
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
@@ -416,8 +404,6 @@ class Invoice extends CI_Controller
 			require_once(dirname(__FILE__) . '/lang/eng.php');
 			$pdf->setLanguageArray($l);
 		}
-
-		// ---------------------------------------------------------
 
 		// set font
 		$pdf->SetFont('dejavusans', '', 10);
@@ -428,9 +414,6 @@ class Invoice extends CI_Controller
 
 		// add a page
 		$pdf->AddPage();
-
-		// writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
-		// writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
 		// create some HTML content
 		$html = '
@@ -623,19 +606,93 @@ class Invoice extends CI_Controller
 				
 				<br/>
 				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
+				<table style=" width: 100%; !important">
+					<tbody>
+						<tr>
+							<td>
+								<table style="width: 35%; !important">
+									<tbody>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td>
+												Bank Acc:-
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Name:-
+											</td>
+											<td>
+												YOGINTRA
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Acc:-
+											</td>
+											<td>
+												50200067255848
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Acc Type:-
+											</td>
+											<td>
+												Current
+											</td>
+										</tr>
+										<tr>
+											<td>
+												IFSC:-
+											</td>
+											<td>
+												HDFC0000175
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Branch name:-
+											</td>
+											<td>
+												DOMBIVALI-EAST
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Upi:-
+											</td>
+											<td>
+												9867291573@hdfcbank
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</td>
+							<td>
+								<img src="' . base_url('assets/') . 'payment-qr.jpg" alt="Payment QR">
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<br/>
 				<br/>
 				<br/>
@@ -907,19 +964,93 @@ class Invoice extends CI_Controller
 				
 				<br/>
 				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
+				<table style=" width: 100%; !important">
+					<tbody>
+						<tr>
+							<td>
+								<table style="width: 35%; !important">
+									<tbody>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td>
+												Bank Acc:-
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Name:-
+											</td>
+											<td>
+												YOGINTRA
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Acc:-
+											</td>
+											<td>
+												50200067255848
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Acc Type:-
+											</td>
+											<td>
+												Current
+											</td>
+										</tr>
+										<tr>
+											<td>
+												IFSC:-
+											</td>
+											<td>
+												HDFC0000175
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Branch name:-
+											</td>
+											<td>
+												DOMBIVALI-EAST
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Upi:-
+											</td>
+											<td>
+												9867291573@hdfcbank
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</td>
+							<td>
+								<img src="' . base_url('assets/') . 'payment-qr.jpg" alt="Payment QR">
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<br/>
 				<br/>
 				<br/>

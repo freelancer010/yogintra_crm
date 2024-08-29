@@ -24,33 +24,37 @@ $this->load->view('includes/header');
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header yogintra align-items-center d-flex justify-content-between">
-                            <a href="addCustomer?id=3" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add
+                            <a href="addCustomer?id=3" class="btn btn-sm btn-primary"><i
+                                    class="fas fa-plus"></i>&nbsp;&nbsp;Add
                                 Customers</a>&nbsp; &nbsp;
                             <div class="row align-items-center ml-auto" style="margin-bottom:-2px">
                                 <div class="filter d-flex justify-content-center align-items-center">
-                                    <div class="d-flex mr-1 align-items-center">                                  
-                                        <button  type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
+                                    <div class="d-flex mr-1 align-items-center">
+                                        <button type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
                                             Generate&nbsp;&nbsp;<i class="fas fa-arrow-right"></i>
                                         </button>
                                         <!-- <button type="button" class="btn btn-danger mr-3" onclick=reset()>reset</button> -->
                                     </div>
                                     <div class="d-flex mr-1 align-items-center">
                                         <!-- <label for="fromDate" class="exampleInputEmail1 mr-1 text-muted ">From</label> -->
-                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate" max="<?php echo date('Y-m-d');?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate"
+                                            max="<?php echo date('Y-m-d'); ?>">
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <label for="toDate" class="exampleInputEmail1 mt-1 mr-3 text-muted">To</label>
-                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate" max="<?php echo date('Y-m-d');?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate"
+                                            max="<?php echo date('Y-m-d'); ?>">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <select id="class_type" name="class" class="form-control editInputBox col-lg-4 m-auto" style="height:30px;margin-bottom:0px !important;display: flex;align-items: center;justify-content: center;padding: 3px 8px;width: 200px;">
+                            <select id="class_type" name="class" class="form-control editInputBox col-lg-4 m-auto"
+                                style="height:30px;margin-bottom:0px !important;display: flex;align-items: center;justify-content: center;padding: 3px 8px;width: 200px;">
                                 <option value='' selected>Select Due type</option>
                                 <option value="full_payment">Due from Customer</option>
                                 <option value="payTotrainer">Due to Trainers</option>
-                            </select>                      
+                            </select>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -82,7 +86,7 @@ $this->load->view('includes/footer');
     let filter = () => {
         let toDate = $("#toDate").val();
         let fromDate = $("#fromDate").val();
-        getData(fromDate,toDate);
+        getData(fromDate, toDate);
     }
 
     let reset = () => {
@@ -91,13 +95,13 @@ $this->load->view('includes/footer');
         getData();
     }
 
-    $('select').on('change', function() {
-        getData([],[],this.value);
+    $('select').on('change', function () {
+        getData([], [], this.value);
     });
 
-    let getData = (startDate='',endDate='',due_type = '',) => {
+    let getData = (startDate = '', endDate = '', due_type = '',) => {
         var apiUrl = PANELURL + 'customer/view';
-        ajaxCallData(apiUrl, {startDate:startDate, endDate:endDate, due_type:due_type}, 'POST')
+        ajaxCallData(apiUrl, { startDate: startDate, endDate: endDate, due_type: due_type }, 'POST')
             .then(function (result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
@@ -122,8 +126,8 @@ $this->load->view('includes/footer');
                         { data: "state" },
                         { data: "city" },
                         { data: "full_payment" },
-                        { data: "trainerName"},
-                        { data: "payTotrainer"},
+                        { data: "trainerName" },
+                        { data: "payTotrainer" },
                         {
                             data: null,
                             render: function (data, type, row) {
@@ -148,6 +152,10 @@ $this->load->view('includes/footer');
                                             <button title="change status to tellecalling" onclick="change_back_toLeads(${row.id})" class="btn btn-success btn-xs mr5">
                                                 <i class="fa fa-reply mr5"></i>
                                             </button>
+                                        ${row.renew_skip == 1 ? `
+                                            <button title="Move to renew" onclick="movetorenew(${row.id})" class="btn btn-warning btn-xs mr5">
+                                                <i class="fas fa-redo-alt"></i>
+                                            </button>`: ''}
                                         </div>`;
                             }
                         }
@@ -215,7 +223,29 @@ $this->load->view('includes/footer');
             });
     };
 
+    let movetorenew = (id) => {
+        let postData = {
+            'id': id,
+        }
+        ajaxCallData(PANELURL + 'renewal/moveToRenew?type=lead', postData, 'POST')
+            .then(function (result) {
+                jsonCheck = isJSON(result);
+                if (jsonCheck == true) {
+                    resp = JSON.parse(result);
+                    if (resp.success == 1) {
+                        getData();
+                        notifyAlert('Data moved to Renewal Successfully!', 'success');
+                    } else {
+                        notifyAlert('You are not authorized!', 'danger');
+                    }
+                } else {
+                    notifyAlert('You are not authorized!', 'danger');
+                }
 
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    };
 
-    
 </script>

@@ -130,7 +130,12 @@ $this->load->view('includes/footer');
                                     </a>
                                 </li>
                                 <li class="list-group-item col-lg-6 col-sm-12">
-                                    <b>Event Date&nbsp;:</b><span class="mx-2">${resp.created_date}</span>
+                                    <b>Center Name&nbsp;:</b><span class="mx-2">${resp.event_name}</span>
+                                    <a class="float-right">
+                                    </a>
+                                </li>
+                                <li class="list-group-item col-lg-6 col-sm-12">
+                                    <b>Start Date&nbsp;:</b><span class="mx-2">${resp.created_date}</span>
                                     <a class="float-right">
                                     </a>
                                 </li>

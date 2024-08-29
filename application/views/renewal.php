@@ -171,8 +171,8 @@ $this->load->view('includes/footer');
                                             <button title="renew this row" onclick="renewData(${row.id},${row.full_payment})" class="btn btn-success btn-xs">
                                                 <i class="fas fa-retweet"></i>
                                             </button>
-                                            <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">
-                                                <i class="fa fa-trash mr5"></i>
+                                            <button href="#" title="skip this row" onclick="skipRenew(${row.id})" class="btn btn-danger btn-xs">
+                                                <i class="fas fa-forward"></i>
                                             </button>
                                         </div>`;
                         }
@@ -192,18 +192,18 @@ $this->load->view('includes/footer');
 
     getData();
 
-    let deleteTelecalling = (id) => {
+    let skipRenew = (id) => {
         let postData = {
             'id': id,
         }
-        ajaxCallData(PANELURL + 'renewal/deleteData?type=lead', postData, 'POST')
+        ajaxCallData(PANELURL + 'renewal/skipRenew?type=lead', postData, 'POST')
             .then(function (result) {
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {
                     resp = JSON.parse(result);
                     if (resp.success == 1) {
                         getData();
-                        notifyAlert('Deleted successfully!', 'success');
+                        notifyAlert('Renewal Skipped Successfully!', 'success');
                     } else {
                         notifyAlert('You are not authorized!', 'danger');
                     }

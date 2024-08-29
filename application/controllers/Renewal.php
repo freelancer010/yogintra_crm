@@ -101,7 +101,8 @@ class Renewal extends CI_Controller
 		$data[$pay] = $this->input->post('leadPreviousAmount') + $this->input->post('renewalAmount');
 		$data['totalPayDate'] = date('Y-m-d');
 		$data['status'] = $status;
-
+		$data['renew_skip'] = 0;
+		
 		$resp = $this->db->where('id', $leadId)->update($table, $data);
 		if ($resp) {
 			$renew_data = [
@@ -118,6 +119,47 @@ class Renewal extends CI_Controller
 			$response = [
 				'success' => 1,
 				'message' => 'Renewal Updated Successfully'
+			];
+		} else {
+			$response = [
+				'success' => 0,
+				'message' => 'No records found!'
+			];
+		}
+		echo json_encode($response);
+	}
+
+	public function skipRenew()
+	{
+		$table = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'yoga' : 'leads';
+		$status = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 1 : 3;
+
+		$id = $_POST['id'];
+		$resp = $this->db->where('id', $id)->update($table, ['status' => $status, 'renew_skip' => 1]);
+		if ($resp) {
+			$response = [
+				'success' => 1,
+				'message' => 'Renewal Skipped Successfully'
+			];
+		} else {
+			$response = [
+				'success' => 0,
+				'message' => 'No records found!'
+			];
+		}
+		echo json_encode($response);
+	}
+
+	public function moveToRenew()
+	{
+		$table = (!empty($_GET['type']) && $_GET['type'] == 'yoga') ? 'yoga' : 'leads';
+
+		$id = $_POST['id'];
+		$resp = $this->db->where('id', $id)->update($table, ['status' => 5, 'renew_skip' => 0]);
+		if ($resp) {
+			$response = [
+				'success' => 1,
+				'message' => 'Data Recorded Successfully'
 			];
 		} else {
 			$response = [

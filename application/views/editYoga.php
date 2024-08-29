@@ -91,11 +91,11 @@ $this->load->view('includes/header');
                                             placeholder="Enter city name">
                                     </div>
 
-                                    <!-- <div class="form-group col-lg-6 col-sm-12" id="attendee_Name">
+                                    <div class="form-group col-lg-6 col-sm-12" id="attendee_Name">
                                         <label for="eventName">Yoga Center Name</label>
                                         <input required type="text" class="form-control editInputBox customEditInputBox"
-                                            id="eventName" name="eventName" placeholder="Enter event name">
-                                    </div> -->
+                                            id="eventName" name="eventName" placeholder="Enter yoga center name">
+                                    </div>
 
                                     <div class="form-group col-lg-6 col-sm-12">
                                         <label for="sdate">Start Date</label>
@@ -199,7 +199,7 @@ $this->load->view('includes/footer');
                     $('#city').val(response.city);
                     $('#clientEmail').val(response.email);
                     $('#class_type').val(response.class_type);
-                    // $('#eventName').val(response.event_name);
+                    $('#eventName').val(response.event_name);
                     $('#package').val(response.package);
                     $('#sdate').val(response.s_date);
                     $('#edate').val(response.e_date);

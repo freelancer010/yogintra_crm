@@ -25,23 +25,27 @@ $this->load->view('includes/header');
                     <div class="card">
                         <div class="card-header yogintra align-items-center d-flex justify-content-between">
                             <!-- <h3 class="card-title">All EVENTS here</h3> -->
-                            <a href="yoga-bookings/add" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add Yoga Center</a>
-                            <a href="#" onclick="filterDue()" class="btn btn-sm btn-secondary ml-auto">&nbsp;&nbsp;Due Customers</a>
+                            <a href="yoga-bookings/add" class="btn btn-sm btn-primary"><i
+                                    class="fas fa-plus"></i>&nbsp;&nbsp;Add Yoga Center</a>
+                            <a href="#" onclick="filterDue()" class="btn btn-sm btn-secondary ml-auto">&nbsp;&nbsp;Due
+                                Customers</a>
                             <div class="row align-items-center ml-auto" style="margin-bottom:-2px">
                                 <div class="filter d-flex justify-content-center align-items-center">
-                                    <div class="d-flex mr-1 align-items-center">                                  
-                                        <button  type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
+                                    <div class="d-flex mr-1 align-items-center">
+                                        <button type="button" class="btn btn-sm btn-success mr-3 " onclick=filter()>
                                             Generate&nbsp;&nbsp;<i class="fas fa-arrow-right"></i>
                                         </button>
                                         <!-- <button type="button" class="btn btn-danger mr-3" onclick=reset()>reset</button> -->
                                     </div>
                                     <div class="d-flex mr-1 align-items-center">
                                         <!-- <label for="fromDate" class="exampleInputEmail1 mr-1 text-muted ">From</label> -->
-                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate" max="<?php echo date('Y-m-d');?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-3" id="fromDate"
+                                            max="<?php echo date('Y-m-d'); ?>">
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <label for="toDate" class="exampleInputEmail1 mt-1 mr-3 text-muted">To</label>
-                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate" max="<?php echo date('Y-m-d', strtotime("tomorrow"));?>">
+                                        <input style="height: 32px;" type="date" class="form-control mr-1" id="toDate"
+                                            max="<?php echo date('Y-m-d', strtotime("tomorrow")); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -72,14 +76,14 @@ $this->load->view('includes/header');
 $this->load->view('includes/footer');
 ?>
 <script>
-    
+
     let filterDue = () => {
-        getData([],[],'totalPayAmount');
+        getData([], [], 'totalPayAmount');
     }
     let filter = () => {
         let toDate = $("#toDate").val();
         let fromDate = $("#fromDate").val();
-        getData(fromDate,toDate);
+        getData(fromDate, toDate);
     }
 
     let reset = () => {
@@ -88,9 +92,9 @@ $this->load->view('includes/footer');
         getData();
     }
 
-    let getData = (startDate='',endDate='',due_type='') => {
+    let getData = (startDate = '', endDate = '', due_type = '') => {
         var apiUrl = PANELURL + 'yoga-bookings';
-        ajaxCallData(apiUrl, {'yoga':'getData',startDate:startDate,endDate:endDate,due_type:due_type}, 'POST')
+        ajaxCallData(apiUrl, { 'yoga': 'getData', startDate: startDate, endDate: endDate, due_type: due_type }, 'POST')
             .then(function (result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
@@ -108,9 +112,9 @@ $this->load->view('includes/footer');
                         },
                         { data: "client_number" },
                         // { data: "event_name"},
-                        { data: "s_date"},
-                        { data: "e_date"},
-                        { data: "totalPayAmount"},
+                        { data: "s_date" },
+                        { data: "e_date" },
+                        { data: "totalPayAmount" },
                         {
                             data: null,
                             render: function (data, type, row) {
@@ -118,17 +122,21 @@ $this->load->view('includes/footer');
                                             <a href="yoga-bookings/editEvents?id=${row.id}" title="edit" class="btn btn-warning btn-xs mr5">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <?php if($_SESSION['admin_role_id'] == 1){?>
-                                            <button href="#" title="delete this row" onclick="deletecustomer(${row.id})" class="btn btn-danger btn-xs">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            <button title="change status to leads" onclick="change_back_toLeads(${row.lead_transfer_id}, ${row.id})" class="btn btn-success btn-xs mr5">
-                                            <i class="fa fa-reply mr5"></i>
-                                        </button>
-                                            <?php }?>
+                                            <?php if ($_SESSION['admin_role_id'] == 1) { ?>
+                                                    <button href="#" title="delete this row" onclick="deletecustomer(${row.id})" class="btn btn-danger btn-xs">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                    <button title="change status to leads" onclick="change_back_toLeads(${row.lead_transfer_id}, ${row.id})" class="btn btn-success btn-xs mr5">
+                                                    <i class="fa fa-reply mr5"></i>
+                                                </button>
+                                            <?php } ?>
                                             <a target ="_blank" href="invoice/yoga?id=${row.id}" title="download invoice" class="btn btn-secondary btn-xs mr5">
                                                 <i class="fa fa-download"></i>
                                             </a>
+                                        ${row.renew_skip == 1 ? `
+                                            <button title="Move to renew" onclick="movetorenew(${row.id})" class="btn btn-warning btn-xs mr5">
+                                                <i class="fas fa-redo-alt"></i>
+                                            </button>`: ''}
                                         </div>`;
                             }
                         }
@@ -145,13 +153,12 @@ $this->load->view('includes/footer');
     };
 
     getData();
-    
+
     let change_back_toLeads = (lead_id, id) => {
-        if(lead_id)
-        {
+        if (lead_id) {
             let postData = {
                 'lead_id': lead_id,
-                'id' : id
+                'id': id
             }
             ajaxCallData(PANELURL + 'customer/changeStatusToTelecallingFromYogaCenter', postData, 'POST')
                 .then(function (result) {
@@ -172,8 +179,7 @@ $this->load->view('includes/footer');
                     console.log(err);
                 });
         }
-        else
-        {
+        else {
             notifyAlert('This data cannot be Back!', 'danger');
         }
     };
@@ -203,4 +209,28 @@ $this->load->view('includes/footer');
             });
     };
 
+    let movetorenew = (id) => {
+        let postData = {
+            'id': id,
+        }
+        ajaxCallData(PANELURL + 'renewal/moveToRenew?type=lead', postData, 'POST')
+            .then(function (result) {
+                jsonCheck = isJSON(result);
+                if (jsonCheck == true) {
+                    resp = JSON.parse(result);
+                    if (resp.success == 1) {
+                        getData();
+                        notifyAlert('Data moved to Renewal Successfully!', 'success');
+                    } else {
+                        notifyAlert('You are not authorized!', 'danger');
+                    }
+                } else {
+                    notifyAlert('You are not authorized!', 'danger');
+                }
+
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    };
 </script>
