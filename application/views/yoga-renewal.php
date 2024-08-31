@@ -55,7 +55,7 @@ $this->load->view('includes/header');
                                         <th style="width:5% !important;">Country</th>
                                         <th style="width:5% !important;">State</th>
                                         <th style="width:5% !important;">City</th>
-                                        <th style="width:10% !important;">Yoga center</th>
+                                        <th style="width:10% !important;">Yoga Center</th>
                                         <th style="width:10% !important;">Date</th>
                                         <th style="width:5% !important;">Package Expire Date</th>
                                         <th style="width:5% !important;">Action</th>
@@ -156,7 +156,7 @@ $this->load->view('includes/footer');
                         data: "city"
                     },
                     {
-                        data: "class_type"
+                        data: "event_name"
                     },
                     {
                         data: "created_date"
