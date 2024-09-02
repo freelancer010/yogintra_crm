@@ -116,17 +116,17 @@ class YogaBooking extends CI_Controller
 					}
 				}
 
-				if (!empty($data['e_date']) && empty($_POST['eventId'])) {
-					$renew_data = [
-						'lead_id' => $eventId,
-						'renew_date' => date('Y-m-d H:i:s'),
-						'renew_amount' => $data['totalPayAmount'],
-						'type' => 'yoga',
-						'created_by' => $_SESSION['username'],
-						'created_date' => date('Y-m-d H:i:s')
-					];
-					$this->db->replace('package_renew_detail', $renew_data);
-				}
+				// if (!empty($data['e_date']) && empty($_POST['eventId'])) {
+				// 	$renew_data = [
+				// 		'lead_id' => $eventId,
+				// 		'renew_date' => date('Y-m-d H:i:s'),
+				// 		'renew_amount' => $data['totalPayAmount'],
+				// 		'type' => 'yoga',
+				// 		'created_by' => $_SESSION['username'],
+				// 		'created_date' => date('Y-m-d H:i:s')
+				// 	];
+				// 	$this->db->replace('package_renew_detail', $renew_data);
+				// }
 
 				$response = [
 					'success' => 1,
