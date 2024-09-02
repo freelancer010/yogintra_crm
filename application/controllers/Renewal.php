@@ -99,10 +99,10 @@ class Renewal extends CI_Controller
 		$leadId = $_POST['leadId'];
 		$data[$date_col] = $this->input->post('renewalDate');
 		$data[$pay] = $this->input->post('leadPreviousAmount') + $this->input->post('renewalAmount');
-		$data['totalPayDate'] = date('Y-m-d');
+		$data['totalPayDate'] = date('Y-m-d h:i:s');
 		$data['status'] = $status;
 		$data['renew_skip'] = 0;
-		
+
 		$resp = $this->db->where('id', $leadId)->update($table, $data);
 		if ($resp) {
 			$renew_data = [
