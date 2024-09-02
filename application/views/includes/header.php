@@ -43,7 +43,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
     <!-- logo favicon -->
     <link rel="shortcut icon" href="<?= base_url('assets/') ?>site-logo.png" type="image/x-icon">
 
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"
         integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
