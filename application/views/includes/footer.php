@@ -73,16 +73,13 @@
 <script>
     $('button#DeleteRow').css('display', 'none');
 
-    
-
-
-    function createDataTable(table_id, jsonData, cols) {
+    function createDataTable(table_id, jsonData, cols,ord = 0) {
         $('#' + table_id).DataTable().clear().destroy();
         if (jsonData.length > 0) {
             $('#' + table_id).DataTable({
                 data: jsonData,
                 columns: cols,
-                "order": [[0, 'desc']],
+                "order": [[ord, 'desc']],
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,

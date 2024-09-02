@@ -213,7 +213,7 @@ $this->load->view('includes/footer');
         let postData = {
             'id': id,
         }
-        ajaxCallData(PANELURL + 'renewal/moveToRenew?type=lead', postData, 'POST')
+        ajaxCallData(PANELURL + 'renewal/moveToRenew?type=yoga', postData, 'POST')
             .then(function (result) {
                 jsonCheck = isJSON(result);
                 if (jsonCheck == true) {

@@ -95,41 +95,52 @@ $this->load->view('includes/footer');
 
     let getData = (class_type = 'all', startDate = '', endDate = '') => {
         var apiUrl = PANELURL + 'ledger';
-        ajaxCallData(apiUrl, { 'class_type': class_type, startDate: startDate, endDate: endDate }, 'POST')
-            .then(function (result) {
+        ajaxCallData(apiUrl, {
+                'class_type': class_type,
+                startDate: startDate,
+                endDate: endDate
+            }, 'POST')
+            .then(function(result) {
                 resp = JSON.parse(result);
                 if (resp.success == 1) {
                     response = resp.data;
-                    let cols = [
-                        { data: "name" },
-                        { data: "full_payment" },
+                    let cols = [{
+                            data: "name"
+                        },
+                        {
+                            data: "full_payment"
+                        },
                         {
                             data: null,
-                            render: function (data, type, row) {
+                            render: function(data, type, row) {
                                 return (row.created_date != '' && row.created_date != undefined) ? row.created_date.slice(0, 10) : '';
                             }
                         },
-                        { data: "trainerName" },
-                        { data: "payTotrainer" },
+                        {
+                            data: "trainerName"
+                        },
+                        {
+                            data: "payTotrainer"
+                        },
                         {
                             data: null,
-                            render: function (data, type, row) {
+                            render: function(data, type, row) {
                                 return (row.trainerPayDate != '' && row.trainerPayDate != undefined) ? row.trainerPayDate.slice(0, 10) : '';
                             }
                         }
                     ]
-                    createDataTable("example1", response, cols);
+                    createDataTable("example1", response, cols, 2);
                 } else {
                     createDataTable("example1", '', '');
                 }
             })
-            .catch(function (err) {
+            .catch(function(err) {
                 console.log(err);
             });
     };
     getData();
 
-    $('select').on('change', function () {
+    $('select').on('change', function() {
         getData(this.value);
     });
 </script>
