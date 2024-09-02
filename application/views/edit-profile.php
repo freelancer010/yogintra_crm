@@ -405,6 +405,7 @@ $this->load->view('includes/footer');
                         $('#attendeeName').prop('disabled', true);
                         $('#fullPatrainerPaymentyment').css('display', 'none');
                         $('#fulltrainerPayDate').css('display', 'none');
+                        $('#packageEndDate').css('display', 'none');
                         $('#back-btn').on('click',()=>{redirect('telecalling')});
                     }else if(response.status == 3){
                         $('#class_type_hidden').val(response.class_type);

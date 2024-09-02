@@ -80,15 +80,15 @@ class Customer extends CI_Controller
 						$this->db->insert_batch('paymentdata', $batchInsert);
 					}
 				}
-				if (!empty($_POST['packageEndDate'])) {
-					$renew_data = [
-						'lead_id' => $leadId,
-						'renew_date' => date('Y-m-d H:i:s'),
-						'type'	=>	'lead',
-						'created_by' => $_SESSION['username']
-					];
-					$this->db->replace('package_renew_detail', $renew_data);
-				}
+				// if (!empty($_POST['packageEndDate'])) {
+				// 	$renew_data = [
+				// 		'lead_id' => $leadId,
+				// 		'renew_date' => date('Y-m-d H:i:s'),
+				// 		'type'	=>	'lead',
+				// 		'created_by' => $_SESSION['username']
+				// 	];
+				// 	$this->db->replace('package_renew_detail', $renew_data);
+				// }
 				$response = [
 					'success' => 1,
 					'message' => 'Customer Added Successfully'

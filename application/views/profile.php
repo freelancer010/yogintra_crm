@@ -219,10 +219,6 @@ $this->load->view('includes/footer');
                                     <a class="float-right">
                                     </a>
                                 </li>
-                                <li class="list-group-item col-lg-6 col-sm-12">
-                                    <b>Package End Date&nbsp;:</b>
-                                    <span class="mx-2">${resp.package_end_date != '0000-00-00 00:00:00' ? resp.package_end_date : ''}</span>
-                                </li>
                                 ${(resp.status == 2) ?
                             `<li class="list-group-item col-lg-6 col-sm-12">
                                         <b>Attempt Stage:</b>
@@ -245,7 +241,11 @@ $this->load->view('includes/footer');
                                     </li>`: ''}` : ''}
                                 ${resp.status == 3 ?
 
-                        `<li class="list-group-item col-lg-6 col-sm-12">
+                                `<li class="list-group-item col-lg-6 col-sm-12">
+                                    <b>Package End Date&nbsp;:</b>
+                                    <span class="mx-2">${resp.package_end_date != '0000-00-00 00:00:00' ? resp.package_end_date : ''}</span>
+                                </li>
+                                <li class="list-group-item col-lg-6 col-sm-12">
                                     <b>Trainer Name&nbsp;:</b><span class="mx-2">${resp.trainerName ? resp.trainerName : ''}</span>
                                     <a class="float-right">
                                     </a>
@@ -359,7 +359,7 @@ $this->load->view('includes/footer');
         $("#renewalAmount").val(row.renew_amount);
         $("#renewalDate").val(row.renew_date);
     }
-    
+
     $(document).ready(function () {
         $('#renewalForm').on('submit', function (event) {
             event.preventDefault();
