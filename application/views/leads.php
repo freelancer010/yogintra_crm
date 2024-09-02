@@ -191,7 +191,7 @@ $this->load->view('includes/footer');
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="#" title="Delete" onclick="deleteLead(${row.id})" class="btn btn-danger btn-xs">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-trash text-white"></i>
                                             </a>
                                     </div class="d-flex">`;
                             }
