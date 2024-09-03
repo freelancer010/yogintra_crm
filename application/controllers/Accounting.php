@@ -46,7 +46,7 @@ class Accounting extends CI_Controller
 									`leads`
 								LEFT JOIN `trainer` ON `trainer`.`id` = `leads`.`trainer_id`
 								WHERE
-									`status` IN (2, 3)
+									`status` IN (3)
 							UNION ALL
 								SELECT
 									`yoga`.`client_name` as name,
