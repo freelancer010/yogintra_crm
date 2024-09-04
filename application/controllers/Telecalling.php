@@ -114,7 +114,7 @@ class Telecalling extends CI_Controller
 	public function changeStatusToLeads()
 	{
 		$id = $_POST['id'];
-		$resp = $this->db->where(['id' => $id])->update('leads', ['status' => 2]);
+		$resp = $this->db->where(['id' => $id])->update('leads', ['status' => 1]);
 		if ($resp) {
 			$response = [
 				'success' => 1,
