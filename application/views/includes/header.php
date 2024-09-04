@@ -429,7 +429,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
                             </li>
                         <?php } ?>
 
-                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2) { ?>
+                        <!-- <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2) { ?>
                             <li class="nav-item">
                                 <a href="<?= PANELURL . 'Admin_roles' ?>" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
@@ -476,7 +476,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
                                     </li>
                                 </ul>
                             </li>
-                        <?php } ?>
+                        <?php } ?> -->
                         <?php if ($_SESSION['admin_role_id'] == 1) { ?>
                             <!--<li class="nav-item has-treeview <?php if ($this->uri->segment(2) == "setting") {
                                 echo "menu-open";
