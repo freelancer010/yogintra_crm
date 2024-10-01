@@ -391,7 +391,6 @@ $this->load->view('includes/footer');
                         $('#payable').css('display', 'none');
                         $('#demoDate').css('display', 'none');
                         $('#packageEndDate').css('display', 'none');
-                        $('#back-btn').on('click',()=>{redirect('lead')});
                     }else if(response.status == 2){
                         $('#class_type_hidden').val(response.class_type);
 
@@ -406,7 +405,6 @@ $this->load->view('includes/footer');
                         $('#fullPatrainerPaymentyment').css('display', 'none');
                         $('#fulltrainerPayDate').css('display', 'none');
                         $('#packageEndDate').css('display', 'none');
-                        $('#back-btn').on('click',()=>{redirect('telecalling')});
                     }else if(response.status == 3){
                         $('#class_type_hidden').val(response.class_type);
 
@@ -417,7 +415,6 @@ $this->load->view('includes/footer');
                         $('#attemp2Holder').css('display', 'none');
                         $('#attemp3Holder').css('display', 'none');
 
-                        $('#back-btn').on('click',()=>{redirect('customer')});
                         if(admin_role_id == 3){
                             $('.customerInputBox').prop('disabled', false);  
                         }
@@ -425,6 +422,31 @@ $this->load->view('includes/footer');
                 } else {
 
                 }
+                
+                <?php if(!empty($_GET['source']) && $_GET['source'] == 'alldata'){ ?>
+                        
+                    $('#back-btn').on('click', () => {
+                       redirect('allData');
+                    });
+                    
+                <?php }else{ ?>
+                    
+                    $('#back-btn').on('click', () => {
+                        if (response.status == 1) {
+                            redirect('lead');
+                        } else if (response.status == 2) {
+                            redirect('telecalling');
+                        } else if (response.status == 3) {
+                            redirect('customer');
+                        } else if (response.status == 4) {
+                            redirect('rejected');
+                        } else if (response.status == 5) {
+                            redirect('renewal');
+                        }
+                    });
+                <?php }?>
+                
+                
             })
             .catch(function (err) {
                 console.log(err);

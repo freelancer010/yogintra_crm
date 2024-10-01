@@ -107,7 +107,12 @@ $this->load->view('includes/footer');
                 resptrainers = response.trainers;
                 resppaymentDetails = response.paymentDetails;
                 respRenewDetails = response.renew_details;
-
+                
+                <?php if(!empty($_GET['source']) && $_GET['source'] == 'alldata'){ ?>
+                        $('#back-btn').on('click', () => {
+                           redirect('allData');
+                        });
+                <?php }else{ ?>
                 $('#back-btn').on('click', () => {
                     if (resp.status == 1) {
                         redirect('lead');
@@ -122,7 +127,7 @@ $this->load->view('includes/footer');
                     }
                     // javascript:history.go(-1)
                 });
-
+                <?php }?>
                 $('.list-groups').append(`<li class="list-group-item col-lg-6 col-sm-12">
                                     <b>Name&nbsp;:</b><span class="mx-2">${resp.name}</span>
                                     <a class="float-right">

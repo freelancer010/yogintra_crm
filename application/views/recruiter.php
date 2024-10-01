@@ -200,10 +200,10 @@
     };
     
     getData();
-    setInterval(function(){  
-        $('#loader').css('display','none');
-        getData(); 
-    },30000);
+    // setInterval(function(){  
+    //     $('#loader').css('display','none');
+    //     getData(); 
+    // },30000);
 
     let change_status = (id,status) => {
         let postData = {

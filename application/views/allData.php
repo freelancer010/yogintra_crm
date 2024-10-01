@@ -99,7 +99,7 @@ $this->load->view('includes/footer');
                         {
                             data: null,
                             render: function (data, type, row) {
-                                return `<a href="${PANELURL}profile?id=${row.id}">${row.name}</a>`;
+                                return `<a href="${PANELURL}profile?id=${row.id}&source=alldata">${row.name}</a>`;
                             }
                         },
                         { data: "number" },
@@ -124,7 +124,7 @@ $this->load->view('includes/footer');
                             data: null,
                             render: function (data, type, row) {
                                 return `<div class="d-flex justify-content-between px-3">
-                                        <a href="profile/edit?id=${row.id}" title="edit" class="btn btn-warning btn-xs mr5">
+                                        <a href="profile/edit?id=${row.id}&source=alldata" title="edit" class="btn btn-warning btn-xs mr5">
                                                 <i class="fa fa-edit"></i>
                                         </a>
                                         <button href="#" title="delete this row" onclick="deleteTelecalling(${row.id})" class="btn btn-danger btn-xs">

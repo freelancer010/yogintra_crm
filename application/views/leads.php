@@ -228,7 +228,7 @@ $this->load->view('includes/footer');
                 },5000);
     }
     // start function on page load
-    startSetInterval();
+    // startSetInterval();
 
     // hover behaviour
     $('body').mousemove(function() {
