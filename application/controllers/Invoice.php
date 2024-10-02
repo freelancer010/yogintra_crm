@@ -17,6 +17,10 @@ class Invoice extends CI_Controller
 		$renewAmount = $_GET['renew_amount'] ?? '';
 		$customerData = $this->getLeadById($leadId)['data'];
 
+echo "<pre>";
+print_r($customerData);
+die;
+
 		// create new PDF document
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -76,7 +80,7 @@ class Invoice extends CI_Controller
 											<td>
 												<strong style="padding: 1cm !important; text-transform: uppercase;background-color:#ddd">Invoice - </strong><span style="background-color:#ddd">#YI' . $_GET['id'] . '</span>
 												<div style="width:100%">Pay Date : ' . substr($customerData['totalPayDate'], 0, 10) . '
-												<br/>Bil Date : ' . date('Y-m-d') . '</div>
+												<br/>Bil Date : ' . substr($customerData['created_date'], 0, 10) . '</div>
 											</td>
 										</tr>
 									</tbody>
