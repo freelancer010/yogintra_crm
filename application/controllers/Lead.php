@@ -254,7 +254,14 @@ class Lead extends CI_Controller
 								'type' => 'lead'
 							];
 						}
+                        
+                        $totalPayDate_chnge = str_replace('T', ' ', $this->input->post('fullPaymentDate')[$key]);
 					}
+
+					if(!empty($totalPayDate_chnge)){
+						$this->db->where(['id' => $leadId])->update('leads', ['totalPayDate' => $totalPayDate_chnge]);
+					}
+					
 
 					if (count($batchInsert) > 0) {
 						$this->db->where(['leadId' => $leadId, 'type' => 'lead'])->update('paymentdata', ['status' => 0]);
