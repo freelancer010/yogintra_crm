@@ -56,8 +56,11 @@ class Invoice extends CI_Controller
 
 		// add a page
 		$pdf->AddPage();
+		
+//      Ankan -- Commented for renew amount 0
+// 		$customer_amount = !empty($renewAmount) ? $renewAmount : $customerData['full_payment'];
 
-		$customer_amount = !empty($renewAmount) ? $renewAmount : $customerData['full_payment'];
+		$customer_amount = $renewAmount;
 
 		$due_amount = ((int) $customerData['package'] * (int) $customerData['quotation']) - (int) $customer_amount;
 		// create some HTML content
@@ -731,7 +734,7 @@ class Invoice extends CI_Controller
 		$renewAmount = $_GET['renew_amount'] ?? '';
 
 		$customerData = $this->getYoga($leadId)['data'];
-		$customer_amount = !empty($renewAmount) ? $renewAmount : $customerData['totalPayAmount'];
+		$customer_amount = $renewAmount;
 
 		// create new PDF document
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
