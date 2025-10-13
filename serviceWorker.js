@@ -2,7 +2,8 @@ var cacheAll = false;
 var CACHE_NAME = 'webapk-cache';
 var urlsToCache = [
 	'/',
-	'/assets/android-chrome-512x512.png'
+	'/assets/android-chrome-512x512.png',
+	'/assets/android-chrome-192x192.png'
 ];
 var urlsNotToCache = [
 ];

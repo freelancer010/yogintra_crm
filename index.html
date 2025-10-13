@@ -1,1 +1,35 @@
-<h1 style="text-align:center;">~~~~~~~~: Welcome to Yogintra CRM :~~~~~~~~</h1>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="theme-color" content="#238ee0">
+	<title>Yogintra CRM</title>
+		<link rel="manifest" href="https://crm.yogintra.com/manifest.json">
+		<link rel="icon" href="https://crm.yogintra.com/assets/favicon.ico">
+		<link rel="apple-touch-icon" href="https://crm.yogintra.com/assets/android-chrome-192x192.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="msapplication-TileColor" content="#238ee0">
+		<meta name="msapplication-TileImage" content="https://crm.yogintra.com/assets/android-chrome-192x192.png">
+</head>
+<body>
+	<main style="display:flex;align-items:center;justify-content:center;height:100vh;">
+		<h1>Welcome to Yogintra CRM</h1>
+	</main>
+
+	<script>
+		// Register service worker if supported
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function() {
+				navigator.serviceWorker.register('/serviceWorker.js')
+					.then(function(reg) {
+						console.log('Service worker registered.', reg);
+					}).catch(function(err) {
+						console.warn('Service worker registration failed:', err);
+					});
+			});
+		}
+	</script>
+</body>
+</html>
