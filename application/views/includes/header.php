@@ -429,30 +429,30 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
                             </li>
                         <?php } ?>
 
-                        <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2) { ?>
-                            <!--<li class="nav-item">-->
-                            <!--    <a href="<?= PANELURL . 'Admin_roles' ?>" class="nav-link">-->
-                            <!--        <i class="nav-icon fas fa-users"></i>-->
-                            <!--        <p>-->
-                            <!--            Roles & Permission-->
-                            <!--            <i class="right fas fa-angle-left"></i>-->
-                            <!--        </p>-->
-                            <!--    </a>-->
-                            <!--    <ul class="nav nav-treeview">-->
-                            <!--        <li class="nav-item">-->
-                            <!--            <a href="<?= PANELURL . 'Admin_roles' ?>" class="nav-link">-->
-                            <!--                <i class="far fa-circle nav-icon"></i>-->
-                            <!--                <p>Roles & Permission</p>-->
-                            <!--            </a>-->
-                            <!--        </li>-->
-                            <!--        <li class="nav-item">-->
-                            <!--            <a href="<?= PANELURL . 'Admin_roles/module' ?>" class="nav-link">-->
-                            <!--                <i class="far fa-circle nav-icon"></i>-->
-                            <!--                <p>Module</p>-->
-                            <!--            </a>-->
-                            <!--        </li>-->
-                            <!--    </ul>-->
-                            <!--</li>-->
+                        <!-- <?php if ($_SESSION['admin_role_id'] == 1 || $_SESSION['admin_role_id'] == 2) { ?>
+                            <li class="nav-item">
+                                <a href="<?= PANELURL . 'Admin_roles' ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Roles & Permission
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'Admin_roles' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Roles & Permission</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?= PANELURL . 'Admin_roles/module' ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Module</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="nav-item">
                                 <a href="<?= PANELURL . 'Admin' ?>" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
@@ -476,7 +476,7 @@ if (!isset($_SESSION['admin_role_id']) && !isset($_SESSION['profile_image'])) {
                                     </li>
                                 </ul>
                             </li>
-                        <?php } ?>
+                        <?php } ?> -->
                         <?php if ($_SESSION['admin_role_id'] == 1) { ?>
                             <!--<li class="nav-item has-treeview <?php if ($this->uri->segment(2) == "setting") {
                                 echo "menu-open";
